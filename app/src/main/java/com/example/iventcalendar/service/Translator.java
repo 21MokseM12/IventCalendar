@@ -3,8 +3,8 @@ package com.example.iventcalendar.service;
 import java.time.Month;
 
 public class Translator {
-    public static String monthTranslate(Month month) {
-        switch (month.toString()) {
+    public static String monthTranslate(String month) {
+        switch (month) {
             case "JANUARY":
                 return "января";
             case "FEBRUARY":

@@ -6,16 +6,16 @@
 
     <TextView
         android:id="@+id/titleOfApp"
-        android:typeface="serif"
+        android:fontFamily="@font/tt_travels_light"
         android:textSize="@dimen/font_size"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/currentDate"
-        android:typeface="serif"
+        android:id="@+id/date"
+        android:fontFamily="@font/tt_travels_light"
         android:textSize="@dimen/font_size"
         android:layout_width="match_parent"
         android:layout_height="74dp"

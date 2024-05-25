@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.iventcalendar.service.Translator;
 
 import java.time.Month;
+import java.util.Arrays;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,15 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         CalendarView calendar = findViewById(R.id.calendarView);
         final TextView titleApp = findViewById(R.id.titleOfApp);
-        titleApp.setText("Ивент? " + new String(Character.toChars(0x0001F609)));
-        final TextView textDateView = findViewById(R.id.currentDate);
+        titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
+        final TextView textDateView = findViewById(R.id.date);
+        String[] currentDate = new Date().toString().split(" ");
+        textDateView.setText(currentDate[2] + " " + Translator.monthTranslate(currentDate[1].toUpperCase()) + " " + currentDate[5]);
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month+1)) + " " + year);
-            }
-        });
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) ->
+                textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month+1).toString()) + " " + year));
     }
 }
