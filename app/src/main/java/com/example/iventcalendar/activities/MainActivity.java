@@ -1,8 +1,10 @@
-package com.example.iventcalendar;
+package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
@@ -10,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.iventcalendar.R;
 import com.example.iventcalendar.service.Translator;
 
 import java.time.Month;
 import java.util.Date;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences eventFlags;
@@ -37,16 +39,14 @@ public class MainActivity extends AppCompatActivity {
             titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
             String[] currentDate = new Date().toString().split(" ");
             textDateView.setText(currentDate[2] + " " + Translator.monthTranslate(currentDate[1].toUpperCase()) + " " + currentDate[5]);
-            Objects.requireNonNull(getActionBar()).setDisplayShowTitleEnabled(false);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-//        View.OnClickListener toSettingsActivityListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SettingsEventActivity.class);
-//                startActivity(intent);
-//            }
-//        };
+        View.OnClickListener toSettingsActivityListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EventSettingsActivity.class);
+                startActivity(intent);
+            }
+        };
 //        View.OnClickListener toCurrentActivityListener = new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                     textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month + 1).toString()) + " " + year);
-//                toSettingsActivityListener.onClick(view);
+                    toSettingsActivityListener.onClick(view);
                 }
             });
         } catch (Exception e) {

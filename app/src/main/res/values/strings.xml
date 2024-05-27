@@ -1,3 +1,9 @@
 <resources>
-<!--    <string name="app_name">EventCalendar</string>-->
+    <!--    <string name="app_name">EventCalendar</string>-->
+
+    <string name="title_activity_event_settings">EventSettingsActivity</string>
+    <string name="tab_text_1">Фото</string>
+    <string name="tab_text_2">Место</string>
+    <string name="tab_text_3">Люди</string>
+    <string name="tab_text_4">Безумие</string>
 </resources>
