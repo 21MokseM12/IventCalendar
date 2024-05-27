@@ -1,6 +1,8 @@
 package com.example.iventcalendar.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -14,6 +16,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
     private ActivityEventInfoBinding binding;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +29,7 @@ public class EventInfoActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+        TextView title = binding.title;
+        title.setText(new String(Character.toChars(0x1f973)) + " МЕРОПРИЯТИЕ " + new String(Character.toChars(0x1f973)));
     }
 }
