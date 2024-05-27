@@ -1,4 +1,4 @@
-package com.example.iventcalendar.settings_tabs;
+package com.example.iventcalendar.tabs.info_tabs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.iventcalendar.R;
 
-public class TabFourthCrazyCount  extends Fragment {
+public class TabFirstPhotos  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab4_crazy_count, container, false);
+        View rootView = inflater.inflate(R.layout.tab1_photos_info, container, false);
         return rootView;
     }
 }
+

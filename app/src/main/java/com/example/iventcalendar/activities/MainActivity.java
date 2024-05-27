@@ -23,22 +23,22 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendar;
     private TextView titleApp;
     private TextView textDateView;
+    private String key;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            super.onCreate(savedInstanceState);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            setContentView(R.layout.activity_main);
-            eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
+        super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        setContentView(R.layout.activity_main);
+        eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
 
-            calendar = findViewById(R.id.calendarView);
-            titleApp = findViewById(R.id.titleOfApp);
-            textDateView = findViewById(R.id.date);
+        calendar = findViewById(R.id.calendarView);
+        titleApp = findViewById(R.id.titleOfApp);
+        textDateView = findViewById(R.id.date);
 
-            titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
-            String[] currentDate = new Date().toString().split(" ");
-            textDateView.setText(currentDate[2] + " " + Translator.monthTranslate(currentDate[1].toUpperCase()) + " " + currentDate[5]);
+        titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
+        String[] currentDate = new Date().toString().split(" ");
+        textDateView.setText(currentDate[2] + " " + Translator.monthTranslate(currentDate[1].toUpperCase()) + " " + currentDate[5]);
 
         View.OnClickListener toSettingsActivityListener = new View.OnClickListener() {
             @Override
@@ -47,23 +47,29 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-//        View.OnClickListener toCurrentActivityListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CurrentEventActivity.class);
-//                startActivity(intent);
-//            }
-//        };
+        View.OnClickListener toEventInfoActivityListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
+                startActivity(intent);
+            }
+        };
+//        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
 
-            calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                @Override
-                public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                    textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month + 1).toString()) + " " + year);
-                    toSettingsActivityListener.onClick(view);
-                }
-            });
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month + 1).toString()) + " " + year);
+                key = String.valueOf(dayOfMonth) + (month+1) + year;
+                if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(view);
+                else toSettingsActivityListener.onClick(view);
+            }
+        });
+    }
+
+    private void saveEventDayFlag(String date) {
+        SharedPreferences.Editor editor = eventFlags.edit();
+        editor.putBoolean(date, true);
+        editor.apply();
     }
 }

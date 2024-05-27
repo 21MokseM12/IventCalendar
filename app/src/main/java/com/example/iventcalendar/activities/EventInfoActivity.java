@@ -7,18 +7,18 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.iventcalendar.ui.settings.SectionsPagerAdapter;
-import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
+import com.example.iventcalendar.ui.info.SectionsPagerAdapter;
+import com.example.iventcalendar.databinding.ActivityEventInfoBinding;
 
-public class EventSettingsActivity extends AppCompatActivity {
+public class EventInfoActivity extends AppCompatActivity {
 
-    private ActivityEventSettingsBinding binding;
+    private ActivityEventInfoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityEventSettingsBinding.inflate(getLayoutInflater());
+        binding = ActivityEventInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

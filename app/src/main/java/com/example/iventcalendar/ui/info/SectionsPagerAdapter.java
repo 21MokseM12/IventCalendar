@@ -1,4 +1,4 @@
-package com.example.iventcalendar.ui.main;
+package com.example.iventcalendar.ui.info;
 
 import android.content.Context;
 
@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.settings_tabs.TabFirstPhotos;
-import com.example.iventcalendar.settings_tabs.TabFourthCrazyCount;
-import com.example.iventcalendar.settings_tabs.TabSecondLocation;
-import com.example.iventcalendar.settings_tabs.TabThirdPeople;
+import com.example.iventcalendar.tabs.info_tabs.TabFirstPhotos;
+import com.example.iventcalendar.tabs.info_tabs.TabFourthCrazyCount;
+import com.example.iventcalendar.tabs.info_tabs.TabSecondLocation;
+import com.example.iventcalendar.tabs.info_tabs.TabThirdPeople;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -34,17 +34,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         //Returning the current tabs
         switch(position) {
             case 0:
-                TabFirstPhotos photosSettings = new TabFirstPhotos();
-                return photosSettings;
+                TabFirstPhotos photosInfo = new TabFirstPhotos();
+                return photosInfo;
             case 1:
-                TabSecondLocation locationSettings = new TabSecondLocation();
-                return locationSettings;
+                TabSecondLocation locationInfo = new TabSecondLocation();
+                return locationInfo;
             case 2:
-                TabThirdPeople peopleSettings = new TabThirdPeople();
-                return peopleSettings;
+                TabThirdPeople peopleInfo = new TabThirdPeople();
+                return peopleInfo;
             case 3:
-                TabFourthCrazyCount crazySettings = new TabFourthCrazyCount();
-                return crazySettings;
+                TabFourthCrazyCount crazyInfo = new TabFourthCrazyCount();
+                return crazyInfo;
             default: return null;
         }
     }
@@ -57,7 +57,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
+        // Show 4 total pages.
         return 4;
     }
 }
