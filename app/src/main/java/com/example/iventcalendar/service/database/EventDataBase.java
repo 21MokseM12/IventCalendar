@@ -1,4 +1,4 @@
-package com.example.iventcalendar.service;
+package com.example.iventcalendar.service.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

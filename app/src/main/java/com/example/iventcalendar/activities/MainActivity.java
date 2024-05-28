@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.service.EventDataBase;
+import com.example.iventcalendar.service.database.EventDataBase;
 import com.example.iventcalendar.service.Translator;
 
 import java.time.Month;

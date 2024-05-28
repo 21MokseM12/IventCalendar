@@ -1,4 +1,4 @@
-package com.example.iventcalendar.service;
+package com.example.iventcalendar.service.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
