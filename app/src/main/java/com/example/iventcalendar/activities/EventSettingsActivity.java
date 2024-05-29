@@ -10,8 +10,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabFirstPhotos;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
+import com.example.iventcalendar.databinding.ActivityMainBinding;
 import com.example.iventcalendar.entities.Event;
 import com.example.iventcalendar.service.database.EventDAO;
 import com.example.iventcalendar.service.database.EventDataBase;
@@ -38,7 +40,7 @@ public class EventSettingsActivity extends AppCompatActivity {
     private EventDataBase dataBase;
     private String date;
     Dialog exitDialog;
-    private String photoPath;
+    private String photoURI;
     private String locations;
     private String people;
     private int crazyCount = 0;
@@ -105,15 +107,24 @@ public class EventSettingsActivity extends AppCompatActivity {
                 for (Fragment fragment: fragments) {
                     if (fragment instanceof TabSecondLocation) locations = ((TabSecondLocation) fragment).getFragmentData();
                     else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
+                    else if (fragment instanceof TabFirstPhotos) photoURI = ((TabFirstPhotos) fragment).getFragmentData();
                 }
                 dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                 try {
                     EventDAO eventDAO = dataBase.eventDAO();
-                    Event event = new Event(date, "", locations, people, crazyCount);
-                    Executors.newSingleThreadExecutor().execute(() -> {
-                        eventDAO.upsertEvent(event);
-                    });
-                    MainActivity.saveEventDayFlag(date);
+                    if (locations == null && people == null && photoURI == null && crazyCount == 0 && eventDAO.isEventExist(date) == 1) {
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            eventDAO.deleteEventByDate(date);
+                            MainActivity.deleteEventDayFlag(date);
+                        });
+                    }
+                    else if ((locations != null || people != null || photoURI != null || crazyCount == 0) && eventDAO.isEventExist(date) == 0){
+                        Event event = new Event(date, photoURI, locations, people, crazyCount);
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            eventDAO.upsertEvent(event);
+                        });
+                        MainActivity.saveEventDayFlag(date);
+                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -130,5 +141,8 @@ public class EventSettingsActivity extends AppCompatActivity {
             }
         });
         exitDialog.show();
+    }
+    public ActivityEventSettingsBinding getBinding() {
+        return this.binding;
     }
 }

@@ -16,4 +16,8 @@ public interface EventDAO {
     void deleteEvent(Event event);
     @Query("SELECT * FROM events event where event.dateId = :date")
     LiveData<Event> getEventInfoByDate(String date);
+    @Query("SELECT COUNT(*) FROM events event where event.dateId = :date")
+    int isEventExist(String date);
+    @Query("DELETE FROM events WHERE dateId = :date")
+    void deleteEventByDate(String date);
 }
