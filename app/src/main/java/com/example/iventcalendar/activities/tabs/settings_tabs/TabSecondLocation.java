@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.EventSettingsActivity;
 import com.example.iventcalendar.activities.MainActivity;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.LocationAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,13 +46,8 @@ public class TabSecondLocation  extends Fragment {
         });
 
         ListView locationsSettings = rootView.findViewById(R.id.locationsViewSettingsList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this.requireActivity(),
-                android.R.layout.simple_list_item_1,
-                locations
-        );
+        LocationAdapter adapter = new LocationAdapter(this.requireActivity(), locations);
         locationsSettings.setAdapter(adapter);
-
         return rootView;
     }
     private void showCustomDialog() {
