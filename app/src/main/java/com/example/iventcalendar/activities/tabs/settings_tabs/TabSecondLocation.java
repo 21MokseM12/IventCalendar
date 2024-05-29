@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.EventSettingsActivity;
 import com.example.iventcalendar.activities.MainActivity;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.LocationAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TabSecondLocation  extends Fragment {
+public class TabSecondLocation  extends Fragment implements FragmentDataListener {
     protected List<String> locations;
     public FloatingActionButton addLocation;
     Dialog locationDialog;
@@ -68,5 +69,10 @@ public class TabSecondLocation  extends Fragment {
         });
 
         locationDialog.show();
+    }
+    public String getFragmentData() {
+        StringBuilder builder = new StringBuilder();
+        for (String location : locations) builder.append(location).append(' ');
+        return builder.toString().trim();
     }
 }

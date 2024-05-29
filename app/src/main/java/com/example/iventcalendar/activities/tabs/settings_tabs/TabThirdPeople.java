@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.LocationAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TabThirdPeople  extends Fragment {
+public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     protected List<String> people;
     public FloatingActionButton addPeople;
     Dialog peopleDialog;
@@ -64,5 +65,10 @@ public class TabThirdPeople  extends Fragment {
         });
 
         peopleDialog.show();
+    }
+    public String getFragmentData() {
+        StringBuilder builder = new StringBuilder();
+        for (String guy : people) builder.append(guy).append(' ');
+        return builder.toString().trim();
     }
 }

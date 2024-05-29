@@ -10,11 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
+import com.example.iventcalendar.service.database.EventDataBase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,10 +32,12 @@ import java.util.Objects;
 public class EventSettingsActivity extends AppCompatActivity {
 
     private ActivityEventSettingsBinding binding;
+    private static EventDataBase dataBase;
+    private String date;
     Dialog exitDialog;
     private String photoPath;
-    private List<String> locations;
-    private List<String> people;
+    private String locations;
+    private String people;
     private int crazyCount = 0;
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,9 +47,12 @@ public class EventSettingsActivity extends AppCompatActivity {
         binding = ActivityEventSettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        date = getIntent().getStringExtra("date");;
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
         TextView title = binding.title;
@@ -87,7 +97,13 @@ public class EventSettingsActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(crazyCount);
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                for (Fragment fragment: fragments) {
+                    if (fragment instanceof TabSecondLocation) locations = ((TabSecondLocation) fragment).getFragmentData();
+                    else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
+                }
+
+
                 exitDialog.dismiss();
                 finish();
             }
