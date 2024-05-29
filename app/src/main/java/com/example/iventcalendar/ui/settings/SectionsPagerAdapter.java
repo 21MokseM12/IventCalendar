@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabFirstPhotos;
-import com.example.iventcalendar.activities.tabs.settings_tabs.TabFourthCrazyCount;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
 
@@ -21,7 +20,7 @@ import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -42,9 +41,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 TabThirdPeople peopleSettings = new TabThirdPeople();
                 return peopleSettings;
-            case 3:
-                TabFourthCrazyCount crazySettings = new TabFourthCrazyCount();
-                return crazySettings;
             default: return null;
         }
     }
