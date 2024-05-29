@@ -20,8 +20,7 @@ import java.time.Month;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    protected EventDataBase dataBase;
-    protected static SharedPreferences eventFlags;
+    private static SharedPreferences eventFlags;
     private CalendarView calendar;
     private TextView titleApp;
     private TextView textDateView;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
+//        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
 //        this.clearEventDaysFlags();
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -86,5 +85,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.clear();
         editor.apply();
+    }
+    protected static boolean isEventFlagExist(String date) {
+        return eventFlags.contains(date);
     }
 }

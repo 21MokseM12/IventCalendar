@@ -142,7 +142,4 @@ public class EventSettingsActivity extends AppCompatActivity {
         });
         exitDialog.show();
     }
-    public ActivityEventSettingsBinding getBinding() {
-        return this.binding;
-    }
 }
