@@ -12,7 +12,8 @@ import android.widget.TextView;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
-import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
+import com.example.iventcalendar.entities.Event;
+import com.example.iventcalendar.service.database.EventDAO;
 import com.example.iventcalendar.service.database.EventDataBase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,11 +30,12 @@ import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 public class EventSettingsActivity extends AppCompatActivity {
 
     private ActivityEventSettingsBinding binding;
-    private static EventDataBase dataBase;
+    private EventDataBase dataBase;
     private String date;
     Dialog exitDialog;
     private String photoPath;
@@ -47,7 +50,7 @@ public class EventSettingsActivity extends AppCompatActivity {
         binding = ActivityEventSettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        date = getIntent().getStringExtra("date");;
+        date = getIntent().getStringExtra("date");
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
@@ -102,7 +105,17 @@ public class EventSettingsActivity extends AppCompatActivity {
                     if (fragment instanceof TabSecondLocation) locations = ((TabSecondLocation) fragment).getFragmentData();
                     else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
                 }
-
+                dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
+                try {
+                    EventDAO eventDAO = dataBase.eventDAO();
+                    Event event = new Event(date, "", locations, people, crazyCount);
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        eventDAO.upsertEvent(event);
+                    });
+                    MainActivity.saveEventDayFlag(date);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
 
                 exitDialog.dismiss();
                 finish();

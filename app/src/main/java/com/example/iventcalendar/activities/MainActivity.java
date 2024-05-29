@@ -72,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveEventDayFlag(String date) {
+    protected static void saveEventDayFlag(String date) {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.putBoolean(date, true);
         editor.apply();
     }
-    private void deleteEventDayFlag(String key) {
+    protected static void deleteEventDayFlag(String key) {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.remove(key);
         editor.apply();
     }
-    private void clearAllEventDaysFlags() {
+    protected static void clearAllEventDaysFlags() {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.clear();
         editor.apply();
