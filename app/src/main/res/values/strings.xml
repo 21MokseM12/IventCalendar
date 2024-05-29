@@ -8,4 +8,5 @@
     <string name="tab_text_4">Безумие</string>
     <string name="title_activity_event_info">EventInfoActivity</string>
     <string name="text_for_location_dialog">Место</string>
+    <string name="text_for_people_dialog">Event-manager</string>
 </resources>

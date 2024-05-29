@@ -61,7 +61,7 @@ public class TabSecondLocation  extends Fragment {
         toAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!locations.contains(placeToAdd.getText().toString()))
+                if (!locations.contains(placeToAdd.getText().toString().trim()))
                     locations.add(placeToAdd.getText().toString());
                 locationDialog.dismiss();
             }
