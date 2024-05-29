@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="180dp"
+    android:layout_gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="30dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/exitTitle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="@font/tt_travels_light"
+                android:gravity="center"
+                android:textSize="@dimen/bar_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/crazyProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:foregroundGravity="center"
+                android:max="10"
+                android:progress="0"
+                android:progressDrawable="@drawable/custom_progress_bar"
+                app:layout_constraintBottom_toTopOf="@+id/saveAndExitButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/exitTitle"
+                app:layout_constraintTop_toBottomOf="@+id/exitTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveAndExitButton"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/exit_and_save_confirm"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/minusOfCrazyButton"
+                android:foregroundGravity="center"
+                app:fabSize="mini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="80dp"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/crazyProgressBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exitTitle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/plusOfCrazyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="80dp"
+                android:clickable="true"
+                android:foregroundGravity="center"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/crazyProgressBar"
+                app:layout_constraintTop_toBottomOf="@+id/exitTitle"
+                app:srcCompat="@drawable/add_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

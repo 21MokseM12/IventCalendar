@@ -9,4 +9,6 @@
     <string name="title_activity_event_info">EventInfoActivity</string>
     <string name="text_for_location_dialog">Место</string>
     <string name="text_for_people_dialog">Event-manager</string>
+    <string name="add_to_list_view">Добавить</string>
+    <string name="exit_and_save_confirm">Сохранить</string>
 </resources>
