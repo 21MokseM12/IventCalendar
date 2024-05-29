@@ -97,6 +97,7 @@ public class EventSettingsActivity extends AppCompatActivity {
             }
         });
         MaterialButton saveButton = exitDialog.findViewById(R.id.saveAndExitButton);
+        MaterialButton exitButton = exitDialog.findViewById(R.id.exitButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +118,13 @@ public class EventSettingsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                exitDialog.dismiss();
+                finish();
+            }
+        });
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 exitDialog.dismiss();
                 finish();
             }
