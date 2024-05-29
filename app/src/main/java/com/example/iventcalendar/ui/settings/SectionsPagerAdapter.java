@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.tabs.settings_tabs.TabFirstPhotos;
-import com.example.iventcalendar.tabs.settings_tabs.TabFourthCrazyCount;
-import com.example.iventcalendar.tabs.settings_tabs.TabSecondLocation;
-import com.example.iventcalendar.tabs.settings_tabs.TabThirdPeople;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabFirstPhotos;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabFourthCrazyCount;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
+import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -58,6 +58,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 4 total pages.
-        return 4;
+        return 3;
     }
 }

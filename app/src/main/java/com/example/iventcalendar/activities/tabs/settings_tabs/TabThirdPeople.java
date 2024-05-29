@@ -1,4 +1,4 @@
-package com.example.iventcalendar.tabs.settings_tabs;
+package com.example.iventcalendar.activities.tabs.settings_tabs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

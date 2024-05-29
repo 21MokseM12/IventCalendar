@@ -1,0 +1,76 @@
+package com.example.iventcalendar.activities.tabs.settings_tabs;
+
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
+import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.EventSettingsActivity;
+import com.example.iventcalendar.activities.MainActivity;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+public class TabSecondLocation  extends Fragment {
+    protected List<String> locations;
+    public FloatingActionButton addLocation;
+    Dialog locationDialog;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.tab2_location_settings, container, false);
+        TextView titleOfFragment = rootView.findViewById(R.id.titleOfLocationsSettings);
+        locations = new ArrayList<>();
+        titleOfFragment.setText("Куда вас Бог занёс на этот раз?)");
+        addLocation = rootView.findViewById(R.id.addLocationButton);
+        locationDialog = new Dialog(this.requireActivity());
+        addLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomDialog();
+            }
+        });
+
+        ListView locationsSettings = rootView.findViewById(R.id.locationsViewSettingsList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this.requireActivity(),
+                android.R.layout.simple_list_item_1,
+                locations
+        );
+        locationsSettings.setAdapter(adapter);
+
+        return rootView;
+    }
+    private void showCustomDialog() {
+        locationDialog.setContentView(R.layout.cutom_settings_location_dialog_layout);
+        Objects.requireNonNull(locationDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        locationDialog.setCancelable(true);
+
+        EditText placeToAdd = locationDialog.findViewById(R.id.setLocationText);
+        MaterialButton toAddButton = locationDialog.findViewById(R.id.addLocationButton);
+
+        toAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!locations.contains(placeToAdd.getText().toString()))
+                    locations.add(placeToAdd.getText().toString());
+                locationDialog.dismiss();
+            }
+        });
+
+        locationDialog.show();
+    }
+}

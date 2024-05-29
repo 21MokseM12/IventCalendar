@@ -1,6 +1,7 @@
 package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -15,7 +16,6 @@ import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
 public class EventSettingsActivity extends AppCompatActivity {
 
     private ActivityEventSettingsBinding binding;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

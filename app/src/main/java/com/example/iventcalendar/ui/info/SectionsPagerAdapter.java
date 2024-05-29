@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.tabs.info_tabs.TabFirstPhotos;
-import com.example.iventcalendar.tabs.info_tabs.TabFourthCrazyCount;
-import com.example.iventcalendar.tabs.info_tabs.TabSecondLocation;
-import com.example.iventcalendar.tabs.info_tabs.TabThirdPeople;
+import com.example.iventcalendar.activities.tabs.info_tabs.TabFirstPhotos;
+import com.example.iventcalendar.activities.tabs.info_tabs.TabFourthCrazyCount;
+import com.example.iventcalendar.activities.tabs.info_tabs.TabSecondLocation;
+import com.example.iventcalendar.activities.tabs.info_tabs.TabThirdPeople;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

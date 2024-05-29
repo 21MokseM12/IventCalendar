@@ -19,6 +19,7 @@
     <style name="Theme.EventCalendar.NoActionBar" parent="Theme.EventCalendar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorOnSecondary">@color/white</item>
     </style>
 
     <style name="Theme.EventCalendar.NoActionBar.NoActionBar">
