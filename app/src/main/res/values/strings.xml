@@ -13,4 +13,5 @@
     <string name="exit_and_save_confirm">Сохранить</string>
     <string name="exit_without_save">Выйти</string>
     <string name="change_photo">Изменить фото</string>
+    <string name="loading_wait_text">Пожалуйста, подождите</string>
 </resources>

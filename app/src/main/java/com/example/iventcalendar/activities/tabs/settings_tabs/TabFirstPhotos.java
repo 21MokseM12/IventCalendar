@@ -22,7 +22,7 @@ import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentD
 
 public class TabFirstPhotos extends Fragment implements FragmentDataListener {
     private String photoURI;
-    ActivityResultLauncher<String> galleryLauncher;
+    private ActivityResultLauncher<String> galleryLauncher;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1_photos_settings, container, false);
@@ -41,6 +41,7 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
                             photo.setImageURI(o);
                             photoURI = o.toString();
                             System.out.println(photoURI);
+                            System.out.println(o);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

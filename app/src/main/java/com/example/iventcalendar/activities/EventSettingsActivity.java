@@ -23,6 +23,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,7 @@ import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 
 public class EventSettingsActivity extends AppCompatActivity {
@@ -39,7 +42,8 @@ public class EventSettingsActivity extends AppCompatActivity {
     private ActivityEventSettingsBinding binding;
     private EventDataBase dataBase;
     private String date;
-    Dialog exitDialog;
+    private Dialog exitDialog;
+    private Dialog waitDialog;
     private String photoURI;
     private String locations;
     private String people;
@@ -109,27 +113,38 @@ public class EventSettingsActivity extends AppCompatActivity {
                     else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
                     else if (fragment instanceof TabFirstPhotos) photoURI = ((TabFirstPhotos) fragment).getFragmentData();
                 }
-                dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
+                exitDialog.dismiss();
+                waitDialog = new Dialog(EventSettingsActivity.this);
+                showWaitingDialog();
+
+                final Integer[] exist = {0};
                 try {
+                    dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                     EventDAO eventDAO = dataBase.eventDAO();
-                    if (locations == null && people == null && photoURI == null && crazyCount == 0 && eventDAO.isEventExist(date) == 1) {
-                        Executors.newSingleThreadExecutor().execute(() -> {
-                            eventDAO.deleteEventByDate(date);
-                            MainActivity.deleteEventDayFlag(date);
-                        });
-                    }
-                    else if ((locations != null || people != null || photoURI != null || crazyCount == 0) && eventDAO.isEventExist(date) == 0){
-                        Event event = new Event(date, photoURI, locations, people, crazyCount);
-                        Executors.newSingleThreadExecutor().execute(() -> {
-                            eventDAO.upsertEvent(event);
-                        });
-                        MainActivity.saveEventDayFlag(date);
-                    }
+                    LiveData<Integer> liveDataQuery = eventDAO.isEventExist(date);
+                    liveDataQuery.observe(EventSettingsActivity.this, new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer integer) {
+                            if (integer != null) exist[0] = integer;
+                            if (locations == null && people == null && photoURI == null && exist[0] == 1) {
+                                Executors.newSingleThreadExecutor().execute(() -> {
+                                    eventDAO.deleteEventByDate(date);
+                                    MainActivity.deleteEventDayFlag(date);
+                                });
+                            }
+                            else if ((locations != null || people != null || photoURI != null) && exist[0] == 0){
+                                Event event = new Event(date, photoURI, locations, people, crazyCount);
+                                Executors.newSingleThreadExecutor().execute(() -> {
+                                    eventDAO.upsertEvent(event);
+                                });
+                                MainActivity.saveEventDayFlag(date);
+                            }
+                            waitDialog.dismiss();
+                        }
+                    });
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-
-                exitDialog.dismiss();
                 finish();
             }
         });
@@ -141,5 +156,11 @@ public class EventSettingsActivity extends AppCompatActivity {
             }
         });
         exitDialog.show();
+    }
+    private void showWaitingDialog() {
+        waitDialog.setContentView(R.layout.wait_for_loading_dialog_layout);
+        Objects.requireNonNull(waitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        waitDialog.setCancelable(false);
+        waitDialog.show();
     }
 }

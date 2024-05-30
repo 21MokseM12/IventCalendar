@@ -1,5 +1,6 @@
 package com.example.iventcalendar.service.database;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -17,7 +18,7 @@ public interface EventDAO {
     @Query("SELECT * FROM events event where event.dateId = :date")
     LiveData<Event> getEventInfoByDate(String date);
     @Query("SELECT COUNT(*) FROM events event where event.dateId = :date")
-    int isEventExist(String date);
+    LiveData<Integer> isEventExist(String date);
     @Query("DELETE FROM events WHERE dateId = :date")
     void deleteEventByDate(String date);
 }
