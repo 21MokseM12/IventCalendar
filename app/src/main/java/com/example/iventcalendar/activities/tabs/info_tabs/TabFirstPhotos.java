@@ -19,26 +19,38 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.EventInfoActivity;
+import com.google.android.material.button.MaterialButton;
 
 import java.net.URI;
 
 public class TabFirstPhotos  extends Fragment {
+    private static final String ARG_PHOTO_URI = "photoURI";
     private String photoURI;
     private ActivityResultLauncher<String> galleryLauncher;
+
+    public static TabFirstPhotos newInstance(String arg) {
+        TabFirstPhotos fragment = new TabFirstPhotos();
+        Bundle args = new Bundle();
+        args.putString(ARG_PHOTO_URI, arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            photoURI = getArguments().getString(ARG_PHOTO_URI);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1_photos_info, container, false);
-        EventInfoActivity activity = (EventInfoActivity) getActivity();
+
         TextView title = rootView.findViewById(R.id.photoTitle);
         title.setText("Весь день в одной фотографии:");
         ImageView photo = rootView.findViewById(R.id.image);
-        Button changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
-        if (activity != null) {
-            photoURI = activity.getPhotoURI();
-            if (photoURI != null) {
-                photo.setImageURI(Uri.parse(photoURI));
-            }
-        }
+        MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
+//        if (photoURI != null) photo.setImageURI(Uri.parse(photoURI));
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
@@ -62,8 +74,8 @@ public class TabFirstPhotos  extends Fragment {
                 galleryLauncher.launch("image/*");
             }
         });
-
         return rootView;
     }
+    public void setPhotoURI(String uri) {this.photoURI = uri;}
 }
 

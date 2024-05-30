@@ -2,6 +2,7 @@ package com.example.iventcalendar.ui.info;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -14,19 +15,22 @@ import com.example.iventcalendar.activities.tabs.info_tabs.TabFourthCrazyCount;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabThirdPeople;
 
+import java.util.List;
+
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+    private List<String> fragmentDataList;
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, List<String> data) {
         super(fm);
         mContext = context;
+        this.fragmentDataList = data;
     }
 
     @Override
@@ -34,17 +38,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         //Returning the current tabs
         switch(position) {
             case 0:
-                TabFirstPhotos photosInfo = new TabFirstPhotos();
-                return photosInfo;
+                return TabFirstPhotos.newInstance(fragmentDataList.get(position));
             case 1:
-                TabSecondLocation locationInfo = new TabSecondLocation();
-                return locationInfo;
+                return TabSecondLocation.newInstance(fragmentDataList.get(position));
             case 2:
-                TabThirdPeople peopleInfo = new TabThirdPeople();
-                return peopleInfo;
+                return TabThirdPeople.newInstance(fragmentDataList.get(position));
             case 3:
-                TabFourthCrazyCount crazyInfo = new TabFourthCrazyCount();
-                return crazyInfo;
+                return TabFourthCrazyCount.newInstance(fragmentDataList.get(position));
             default: return null;
         }
     }

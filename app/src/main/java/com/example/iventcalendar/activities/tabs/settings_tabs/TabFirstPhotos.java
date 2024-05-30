@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
+import com.google.android.material.button.MaterialButton;
 
 public class TabFirstPhotos extends Fragment implements FragmentDataListener {
     private String photoURI;
@@ -29,7 +30,7 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
         TextView title = rootView.findViewById(R.id.photoTitle);
         title.setText("Выбери фото, которое лучше всего описывает иВеНт)");
         ImageView photo = rootView.findViewById(R.id.image);
-        Button changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
+        MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),

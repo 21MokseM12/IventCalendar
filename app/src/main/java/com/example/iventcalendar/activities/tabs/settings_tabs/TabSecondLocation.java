@@ -29,14 +29,14 @@ import java.util.stream.Collectors;
 
 public class TabSecondLocation  extends Fragment implements FragmentDataListener {
     protected List<String> locations;
-    public FloatingActionButton addLocation;
+    private FloatingActionButton addLocation;
     Dialog locationDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab2_location_settings, container, false);
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfLocationsSettings);
-        locations = new ArrayList<>();
         titleOfFragment.setText("Куда вас Бог занёс на этот раз?)");
+        locations = new ArrayList<>();
         addLocation = rootView.findViewById(R.id.addLocationButton);
         locationDialog = new Dialog(this.requireActivity());
         addLocation.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
             @Override
             public void onClick(View v) {
                 if (!locations.contains(placeToAdd.getText().toString().trim()))
-                    locations.add(placeToAdd.getText().toString());
+                    locations.add(placeToAdd.getText().toString().trim());
                 locationDialog.dismiss();
             }
         });
