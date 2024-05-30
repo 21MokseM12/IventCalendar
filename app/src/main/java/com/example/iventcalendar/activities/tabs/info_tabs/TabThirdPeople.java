@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.LocationAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TabThirdPeople  extends Fragment {
+public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     private static final String ARG_PEOPLE = "people";
     private List<String> people;
     public FloatingActionButton addPeople;

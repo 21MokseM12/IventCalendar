@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -18,7 +19,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TabFourthCrazyCount  extends Fragment {
+public class TabFourthCrazyCount  extends Fragment implements FragmentDataListener {
     private final static String ARG_CRAZY = "crazyCount";
     private int crazyCount = 0;
 
@@ -96,7 +97,7 @@ public class TabFourthCrazyCount  extends Fragment {
         else if (crazyCount < 4) return "На плитах были?)";
         else return "А ты хороша, звучит интригующе!";
     }
-    public int getFragmentData() {
-        return this.crazyCount;
+    public String getFragmentData() {
+        return String.valueOf(this.crazyCount);
     }
 }

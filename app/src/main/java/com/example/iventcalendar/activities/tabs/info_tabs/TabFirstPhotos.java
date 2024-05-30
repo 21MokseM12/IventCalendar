@@ -19,11 +19,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.EventInfoActivity;
+import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.net.URI;
 
-public class TabFirstPhotos  extends Fragment {
+public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
     private static final String ARG_PHOTO_URI = "photoURI";
     private String photoURI;
     private ActivityResultLauncher<String> galleryLauncher;
@@ -77,5 +78,6 @@ public class TabFirstPhotos  extends Fragment {
         return rootView;
     }
     public void setPhotoURI(String uri) {this.photoURI = uri;}
+    public String getFragmentData() {return this.photoURI;}
 }
 

@@ -16,4 +16,6 @@
     <string name="loading_wait_text">Пожалуйста, подождите</string>
     <string name="changeCrazy">Изменить</string>
     <string name="confirmChanges">Сохранить</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>
