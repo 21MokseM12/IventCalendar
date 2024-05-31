@@ -1,7 +1,12 @@
 pluginManagement {
     repositories {
-        google()
-        maven { url 'https://jitpack.io' }
+        google{
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
