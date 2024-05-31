@@ -15,13 +15,16 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.service.database.EventDataBase;
 import com.example.iventcalendar.service.Translator;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.time.Month;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences eventFlags;
-    private CalendarView calendar;
+    private MaterialCalendarView calendar;
     private TextView titleApp;
     private TextView textDateView;
     private String key;
@@ -60,13 +63,14 @@ public class MainActivity extends AppCompatActivity {
 //        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
 //        this.clearEventDaysFlags();
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                textDateView.setText(dayOfMonth + " " + Translator.monthTranslate(Month.of(month + 1).toString()) + " " + year);
-                key = String.valueOf(dayOfMonth) + (month+1) + year;
-                if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(view);
-                else toSettingsActivityListener.onClick(view);
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                textDateView.setText(date.getDay() + " " + Translator.monthTranslate(Month.of(date.getMonth() + 1).toString()) + " " + date.getYear());
+                key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
+                if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
+                else toSettingsActivityListener.onClick(widget);
             }
         });
     }
