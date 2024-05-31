@@ -26,11 +26,9 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
 //        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 //        assertEquals("com.example.iventcalendar", appContext.getPackageName());
-        String str = "".trim();
-        String[] list = str.split(" ");
-        List<String> list1 = new ArrayList<>(Arrays.asList(list));
-        System.out.println(list1);
-        System.out.println(list1.size());
-        System.out.println(list1.isEmpty());
+        List<String> arr = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        for (String a : arr) builder.append(a);
+        System.out.println(builder);
     }
 }

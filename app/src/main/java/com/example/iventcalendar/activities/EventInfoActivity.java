@@ -14,6 +14,7 @@ import com.example.iventcalendar.activities.tabs.info_tabs.TabFourthCrazyCount;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabThirdPeople;
 import com.example.iventcalendar.entities.Event;
+import com.example.iventcalendar.service.EventDecorator;
 import com.example.iventcalendar.service.database.EventDAO;
 import com.example.iventcalendar.service.database.EventDataBase;
 import com.google.android.material.button.MaterialButton;
@@ -29,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iventcalendar.ui.info.SectionsPagerAdapter;
 import com.example.iventcalendar.databinding.ActivityEventInfoBinding;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +96,10 @@ public class EventInfoActivity extends AppCompatActivity {
                                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                                     outputData = new ArrayList<>();
                                     for (Fragment fragment: fragments) {
-                                        if (fragment instanceof TabFirstPhotos) outputData.add(((TabFirstPhotos) fragment).getFragmentData());
+                                        if (fragment instanceof TabFirstPhotos) {
+                                            if (((TabFirstPhotos) fragment).getFragmentData() == null) outputData.add("");
+                                            else outputData.add(((TabFirstPhotos) fragment).getFragmentData());
+                                        }
                                         else if (fragment instanceof TabSecondLocation) outputData.add(((TabSecondLocation) fragment).getFragmentData());
                                         else if (fragment instanceof TabThirdPeople) outputData.add(((TabThirdPeople) fragment).getFragmentData());
                                         else if (fragment instanceof TabFourthCrazyCount) outputData.add(((TabFourthCrazyCount) fragment).getFragmentData());
@@ -130,34 +135,22 @@ public class EventInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 exitDialog.dismiss();
-                waitDialog = new Dialog(EventInfoActivity.this);
-                showWaitDialog();
-
-                final Integer[] exist = {0};
                 try {
                     dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                     EventDAO eventDAO = dataBase.eventDAO();
-                    LiveData<Integer> liveDataQuery = eventDAO.isEventExist(date);
-                    liveDataQuery.observe(EventInfoActivity.this, new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer integer) {
-                            if (integer != null) exist[0] = integer;
-                            if (outputData.get(1) == null && outputData.get(2) == null && outputData.get(0) == null && exist[0] == 1) {
-                                Executors.newSingleThreadExecutor().execute(() -> {
-                                    eventDAO.deleteEventByDate(date);
-                                    MainActivity.deleteEventDayFlag(date);
-                                });
-                            }
-                            else if ((outputData.get(1) != null || outputData.get(2) != null || outputData.get(0) != null) && exist[0] == 1){
-                                Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
-                                Executors.newSingleThreadExecutor().execute(() -> {
-                                    eventDAO.upsertEvent(event);
-                                });
-                                MainActivity.saveEventDayFlag(date);
-                            }
-                            waitDialog.dismiss();
-                        }
-                    });
+                    if (outputData.get(1).isEmpty() && outputData.get(2).isEmpty() && outputData.get(0).isEmpty()) {
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            eventDAO.deleteEventByDate(date);
+                            MainActivity.deleteEventDayFlag(date);
+                        });
+                    }
+                    else if (!outputData.get(1).isEmpty() || !outputData.get(2).isEmpty() || !outputData.get(0).isEmpty()){
+                        Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            eventDAO.upsertEvent(event);
+                        });
+                        MainActivity.saveEventDayFlag(date);
+                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

@@ -114,34 +114,20 @@ public class EventSettingsActivity extends AppCompatActivity {
                     else if (fragment instanceof TabFirstPhotos) photoURI = ((TabFirstPhotos) fragment).getFragmentData();
                 }
                 exitDialog.dismiss();
-                waitDialog = new Dialog(EventSettingsActivity.this);
-                showWaitingDialog();
 
-                final Integer[] exist = {0};
                 try {
                     dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                     EventDAO eventDAO = dataBase.eventDAO();
-                    LiveData<Integer> liveDataQuery = eventDAO.isEventExist(date);
-                    liveDataQuery.observe(EventSettingsActivity.this, new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer integer) {
-                            if (integer != null) exist[0] = integer;
-                            if (locations == null && people == null && photoURI == null && exist[0] == 1) {
-                                Executors.newSingleThreadExecutor().execute(() -> {
-                                    eventDAO.deleteEventByDate(date);
-                                    MainActivity.deleteEventDayFlag(date);
-                                });
-                            }
-                            else if ((locations != null || people != null || photoURI != null) && exist[0] == 0){
-                                Event event = new Event(date, photoURI, locations, people, crazyCount);
-                                Executors.newSingleThreadExecutor().execute(() -> {
-                                    eventDAO.upsertEvent(event);
-                                });
-                                MainActivity.saveEventDayFlag(date);
-                            }
-                            waitDialog.dismiss();
-                        }
-                    });
+                    if (photoURI == null) photoURI = "";
+                    if (locations == null) locations = "";
+                    if (people == null) people = "";
+                    if (!locations.isEmpty() || !people.isEmpty() || !photoURI.isEmpty()) {
+                        Event event = new Event(date, photoURI, locations, people, crazyCount);
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            eventDAO.upsertEvent(event);
+                        });
+                        MainActivity.saveEventDayFlag(date);
+                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

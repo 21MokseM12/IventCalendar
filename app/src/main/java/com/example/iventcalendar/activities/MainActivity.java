@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.service.EventDecorator;
 import com.example.iventcalendar.service.database.EventDataBase;
 import com.example.iventcalendar.service.Translator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView titleApp;
     private TextView textDateView;
     private String key;
+    private EventDecorator decorator;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
         };
 //        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
 //        this.clearEventDaysFlags();
+        System.out.println(eventFlags.getAll());
 
-
+        decorator = new EventDecorator(this, eventFlags, R.drawable.ic_event_day);
+        calendar.addDecorator(decorator);
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
                 if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
                 else toSettingsActivityListener.onClick(widget);
+                calendar.addDecorator(decorator);
             }
         });
     }
