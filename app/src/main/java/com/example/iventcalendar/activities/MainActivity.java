@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         TextView titleApp = findViewById(R.id.titleOfApp);
         textDateView = findViewById(R.id.date);
 
+        calendar.setShowOtherDates(MaterialCalendarView.SHOW_NONE);
+
         titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
         String[] currentDate = new Date().toString().split(" ");
         textDateView.setText(currentDate[2] + " " + Translator.monthTranslate(currentDate[1].toUpperCase()) + " " + currentDate[5]);
@@ -79,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 //        this.clearEventDaysFlags();
-        System.out.println(eventFlags.getAll());
+//        System.out.println(eventFlags.getAll());
 
-        decorator = new EventDecorator(this, eventFlags, R.drawable.ic_event_day);
+        decorator = new EventDecorator(this, eventFlags, R.drawable.skate_circle);
         calendar.addDecorator(decorator);
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
