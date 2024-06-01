@@ -15,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.service.EventDecorator;
+import com.example.iventcalendar.service.decorators.ActiveEventDecorator;
 import com.example.iventcalendar.service.Translator;
+import com.example.iventcalendar.service.decorators.CurrentDateDecorator;
 import com.google.android.material.button.MaterialButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialCalendarView calendar;
     private TextView textDateView;
     private String key;
-    private EventDecorator decorator;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +84,16 @@ public class MainActivity extends AppCompatActivity {
 //        this.clearEventDaysFlags();
 //        System.out.println(eventFlags.getAll());
 
-        decorator = new EventDecorator(this, eventFlags, R.drawable.skate_circle);
-        calendar.addDecorator(decorator);
-        calendar.setSelectionColor(Color.TRANSPARENT);
+        ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
+        CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator();
+
+        calendar.addDecorator(eventDecorator);
+        calendar.addDecorator(currentDateDecorator);
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                currentDateDecorator.setDate(date);
+                calendar.invalidateDecorators();
                 textDateView.setText(date.getDay() + " " + Translator.monthTranslate(Month.of(date.getMonth() + 1).toString()) + " " + date.getYear());
                 key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
                 if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);

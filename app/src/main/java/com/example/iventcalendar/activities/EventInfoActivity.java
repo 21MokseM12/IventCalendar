@@ -14,7 +14,6 @@ import com.example.iventcalendar.activities.tabs.info_tabs.TabFourthCrazyCount;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabThirdPeople;
 import com.example.iventcalendar.entities.Event;
-import com.example.iventcalendar.service.EventDecorator;
 import com.example.iventcalendar.service.database.EventDAO;
 import com.example.iventcalendar.service.database.EventDataBase;
 import com.google.android.material.button.MaterialButton;
@@ -30,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iventcalendar.ui.info.SectionsPagerAdapter;
 import com.example.iventcalendar.databinding.ActivityEventInfoBinding;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 import java.util.List;

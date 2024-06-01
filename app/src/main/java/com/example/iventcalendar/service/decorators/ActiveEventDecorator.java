@@ -1,4 +1,4 @@
-package com.example.iventcalendar.service;
+package com.example.iventcalendar.service.decorators;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,12 +9,12 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
-public class EventDecorator implements DayViewDecorator {
+public class ActiveEventDecorator implements DayViewDecorator {
     private final SharedPreferences flags;
     private final Drawable drawable;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public EventDecorator(Context context, SharedPreferences flags, int drawableResId) {
+    public ActiveEventDecorator(Context context, SharedPreferences flags, int drawableResId) {
         this.flags = flags;
         this.drawable = context.getDrawable(drawableResId);
     }
