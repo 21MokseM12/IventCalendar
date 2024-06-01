@@ -13,7 +13,6 @@ import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabFirstPhotos;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
 import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
-import com.example.iventcalendar.databinding.ActivityMainBinding;
 import com.example.iventcalendar.entities.Event;
 import com.example.iventcalendar.service.database.EventDAO;
 import com.example.iventcalendar.service.database.EventDataBase;
@@ -23,8 +22,6 @@ import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +31,6 @@ import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.Executors;
 
 public class EventSettingsActivity extends AppCompatActivity {
@@ -75,7 +71,7 @@ public class EventSettingsActivity extends AppCompatActivity {
         });
     }
     private void showExitDialog() {
-        exitDialog.setContentView(R.layout.custom_exit_dialog_layout);
+        exitDialog.setContentView(R.layout.custom_exit_dialog);
         Objects.requireNonNull(exitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         exitDialog.setCancelable(true);
 

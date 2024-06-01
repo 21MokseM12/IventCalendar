@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,8 +14,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.activities.EventSettingsActivity;
-import com.example.iventcalendar.activities.MainActivity;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
 import com.example.iventcalendar.activities.tabs.settings_tabs.service.LocationAdapter;
 import com.google.android.material.button.MaterialButton;
@@ -25,7 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class TabSecondLocation  extends Fragment implements FragmentDataListener {
     protected List<String> locations;
@@ -52,7 +48,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         return rootView;
     }
     private void showCustomDialog() {
-        locationDialog.setContentView(R.layout.cutom_settings_location_dialog_layout);
+        locationDialog.setContentView(R.layout.custom_settings_location_dialog);
         Objects.requireNonNull(locationDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         locationDialog.setCancelable(true);
 

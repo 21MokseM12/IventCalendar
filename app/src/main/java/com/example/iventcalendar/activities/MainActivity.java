@@ -1,8 +1,11 @@
 package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,15 +17,19 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.service.EventDecorator;
 import com.example.iventcalendar.service.Translator;
+import com.google.android.material.button.MaterialButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.time.Month;
 import java.util.Date;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences eventFlags;
+    private SharedPreferences isFirstLaunch;
+    private Dialog firstDialog;
     private MaterialCalendarView calendar;
     private TextView textDateView;
     private String key;
@@ -34,6 +41,18 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
+        isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
+//        SharedPreferences.Editor editor1 = isFirstLaunch.edit();
+//        editor1.clear();
+//        editor1.apply();
+        if (!isFirstLaunch.contains("true")) {
+            firstDialog = new Dialog(MainActivity.this);
+            showFirstDialog();
+            SharedPreferences.Editor editor = isFirstLaunch.edit();
+            editor.putBoolean("true", true);
+            editor.apply();
+        }
+//        System.out.println(isFirstLaunch.getAll());
 
         calendar = findViewById(R.id.calendarView);
         TextView titleApp = findViewById(R.id.titleOfApp);
@@ -74,6 +93,20 @@ public class MainActivity extends AppCompatActivity {
                 calendar.addDecorator(decorator);
             }
         });
+    }
+    private void showFirstDialog() {
+        firstDialog.setContentView(R.layout.custom_first_launch_dialog);
+        Objects.requireNonNull(firstDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        firstDialog.setCancelable(false);
+        MaterialButton button = firstDialog.findViewById(R.id.firstLaunchButton);
+        button.setText("ОЙОЙОЙ");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstDialog.dismiss();
+            }
+        });
+        firstDialog.show();
     }
 
     protected static void saveEventDayFlag(String date) {

@@ -70,7 +70,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         return rootView;
     }
     private void showCustomDialog() {
-        peopleDialog.setContentView(R.layout.custom_settings_people_dialog_layout);
+        peopleDialog.setContentView(R.layout.custom_settings_people_dialog);
         Objects.requireNonNull(peopleDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         peopleDialog.setCancelable(true);
 

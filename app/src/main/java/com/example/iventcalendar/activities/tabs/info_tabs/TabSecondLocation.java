@@ -71,7 +71,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         return rootView;
     }
     private void showCustomDialog() {
-        locationDialog.setContentView(R.layout.cutom_settings_location_dialog_layout);
+        locationDialog.setContentView(R.layout.custom_settings_location_dialog);
         Objects.requireNonNull(locationDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         locationDialog.setCancelable(true);
 
