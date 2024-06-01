@@ -143,10 +143,4 @@ public class EventSettingsActivity extends AppCompatActivity {
         });
         exitDialog.show();
     }
-    private void showWaitingDialog() {
-        waitDialog.setContentView(R.layout.wait_for_loading_dialog_layout);
-        Objects.requireNonNull(waitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        waitDialog.setCancelable(false);
-        waitDialog.show();
-    }
 }

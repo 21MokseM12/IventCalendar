@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.service.EventDecorator;
-import com.example.iventcalendar.service.database.EventDataBase;
 import com.example.iventcalendar.service.Translator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -26,7 +24,6 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences eventFlags;
     private MaterialCalendarView calendar;
-    private TextView titleApp;
     private TextView textDateView;
     private String key;
     private EventDecorator decorator;
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
 
         calendar = findViewById(R.id.calendarView);
-        titleApp = findViewById(R.id.titleOfApp);
+        TextView titleApp = findViewById(R.id.titleOfApp);
         textDateView = findViewById(R.id.date);
 
         titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-//        this.saveEventDayFlag(String.valueOf(27) + 5 + 2024);
 //        this.clearEventDaysFlags();
         System.out.println(eventFlags.getAll());
 

@@ -60,7 +60,6 @@ public class EventInfoActivity extends AppCompatActivity {
         dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
         EventDAO eventDAO = dataBase.eventDAO();
         waitDialog = new Dialog(EventInfoActivity.this);
-        showWaitDialog();
         LiveData<Integer> liveDataExist = eventDAO.isEventExist(date);
         liveDataExist.observe(EventInfoActivity.this, new Observer<Integer>() {
             @Override
@@ -159,11 +158,5 @@ public class EventInfoActivity extends AppCompatActivity {
         });
 
         exitDialog.show();
-    }
-    private void showWaitDialog() {
-        waitDialog.setContentView(R.layout.wait_for_loading_dialog_layout);
-        Objects.requireNonNull(waitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        waitDialog.setCancelable(false);
-        waitDialog.show();
     }
 }
