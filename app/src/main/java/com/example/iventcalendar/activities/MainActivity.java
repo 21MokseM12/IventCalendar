@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         decorator = new EventDecorator(this, eventFlags, R.drawable.skate_circle);
         calendar.addDecorator(decorator);
+        calendar.setSelectionColor(Color.TRANSPARENT);
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
                 if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
                 else toSettingsActivityListener.onClick(widget);
-                calendar.addDecorator(decorator);
+                calendar.invalidateDecorators();
             }
         });
     }
