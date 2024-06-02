@@ -1,17 +1,25 @@
 package com.example.iventcalendar.activities.tabs.info_tabs;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -23,11 +31,14 @@ import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentD
 import com.google.android.material.button.MaterialButton;
 
 import java.net.URI;
+import java.util.Map;
+import java.util.Objects;
 
 public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
     private static final String ARG_PHOTO_URI = "photoURI";
-    private String photoURI;
+    private Uri photoURI;
     private ActivityResultLauncher<String> galleryLauncher;
+    private ImageView photo;
 
     public static TabFirstPhotos newInstance(String arg) {
         TabFirstPhotos fragment = new TabFirstPhotos();
@@ -40,7 +51,8 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            photoURI = getArguments().getString(ARG_PHOTO_URI);
+            photoURI = Uri.parse(getArguments().getString(ARG_PHOTO_URI));
+            System.out.println(photoURI.getPath());
         }
     }
     @Override
@@ -49,9 +61,13 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
 
         TextView title = rootView.findViewById(R.id.photoTitle);
         title.setText("Весь день в одной фотографии:");
-        ImageView photo = rootView.findViewById(R.id.image);
+        photo = rootView.findViewById(R.id.image);
         MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
-//        if (photoURI != null) photo.setImageURI(Uri.parse(photoURI));
+
+        if (photoURI != null) {
+//            Glide.with(rootView).load(photoURI).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(photo);
+            photo.setImageURI(photoURI);
+        } else Toast.makeText(requireContext(), "Фото не было выбрано(", Toast.LENGTH_LONG).show();
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
@@ -61,8 +77,8 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                         try {
                             Glide.with(rootView).load(o).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(photo);
                             photo.setImageURI(o);
-                            photoURI = o.toString();
-                            System.out.println(photoURI);
+                            photoURI = o;
+//                            System.out.println(photoURI);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -77,7 +93,6 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
         });
         return rootView;
     }
-    public void setPhotoURI(String uri) {this.photoURI = uri;}
-    public String getFragmentData() {return this.photoURI;}
+    public String getFragmentData() {return this.photoURI.getPath();}
 }
 

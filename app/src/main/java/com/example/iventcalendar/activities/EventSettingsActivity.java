@@ -39,7 +39,6 @@ public class EventSettingsActivity extends AppCompatActivity {
     private EventDataBase dataBase;
     private String date;
     private Dialog exitDialog;
-    private Dialog waitDialog;
     private String photoURI;
     private String locations;
     private String people;
@@ -139,4 +138,5 @@ public class EventSettingsActivity extends AppCompatActivity {
         });
         exitDialog.show();
     }
+    private String getDate() {return this.date;}
 }

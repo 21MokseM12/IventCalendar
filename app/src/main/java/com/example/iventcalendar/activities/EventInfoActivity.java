@@ -1,12 +1,16 @@
 package com.example.iventcalendar.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabFirstPhotos;
@@ -20,6 +24,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -43,6 +51,7 @@ public class EventInfoActivity extends AppCompatActivity {
     private Dialog exitDialog;
     private EventDataBase dataBase;
     private String date;
+//    private ActivityResultLauncher<String> pLauncher;
 
 
     @SuppressLint("SetTextI18n")
@@ -51,6 +60,9 @@ public class EventInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEventInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+//        registerPermissionListener();
+//        checkMediaPermission();
 
         date = getIntent().getStringExtra("date");
 

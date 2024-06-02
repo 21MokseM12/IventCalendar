@@ -25,7 +25,13 @@
             android:exported="false"
             android:label="@string/title_activity_event_info"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EventCalendar.NoActionBar.NoActionBar" />
+            android:theme="@style/Theme.EventCalendar.NoActionBar.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.EventSettingsActivity"
             android:exported="false"
