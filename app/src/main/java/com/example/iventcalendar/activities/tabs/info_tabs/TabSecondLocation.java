@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -81,8 +82,10 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         toAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!locations.contains(placeToAdd.getText().toString().trim()))
-                    locations.add(placeToAdd.getText().toString());
+                if (!placeToAdd.getText().toString().trim().isEmpty()) {
+                    if (!locations.contains(placeToAdd.getText().toString().trim()))
+                        locations.add(placeToAdd.getText().toString());
+                } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 locationDialog.dismiss();
             }
         });

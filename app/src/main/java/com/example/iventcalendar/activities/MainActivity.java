@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
-        CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator();
+        CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator(this, R.drawable.oleg_image);
 
         calendar.addDecorator(eventDecorator);
         calendar.addDecorator(currentDateDecorator);

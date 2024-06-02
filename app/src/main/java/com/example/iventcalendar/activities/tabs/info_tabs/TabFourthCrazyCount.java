@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class TabFourthCrazyCount  extends Fragment implements FragmentDataListener {
     private final static String ARG_CRAZY = "crazyCount";
     private int crazyCount = 0;
+    private TextView title;
 
     public static TabFourthCrazyCount newInstance(String arg) {
         TabFourthCrazyCount fragment = new TabFourthCrazyCount();
@@ -41,10 +42,8 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab4_crazy_info, container, false);
-        TextView title = rootView.findViewById(R.id.crazyTitle);
-        if (crazyCount >= 8) title.setText("ЭТО ПОЛНОЕ БЕЗУМСТВО!");
-        else if (crazyCount < 4) title.setText("На плитах были?)");
-        else title.setText("А ты хороша, звучит интригующе!");
+        title = rootView.findViewById(R.id.crazyTitle);
+        title.setText(getTitleText(crazyCount));
 
         FloatingActionButton plusButton = rootView.findViewById(R.id.plusOfCrazyButton);
         FloatingActionButton minusButton = rootView.findViewById(R.id.minusOfCrazyButton);
@@ -93,9 +92,9 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
         return rootView;
     }
     private String getTitleText(int crazyCount) {
-        if (crazyCount >= 8) return "ЭТО ПОЛНОЕ БЕЗУМСТВО!";
+        if (crazyCount >= 8) return "ОЙОЙОЙ";
         else if (crazyCount < 4) return "На плитах были?)";
-        else return "А ты хороша, звучит интригующе!";
+        else return "Некое веселье :D";
     }
     public String getFragmentData() {
         return String.valueOf(this.crazyCount);
