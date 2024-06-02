@@ -21,6 +21,8 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_people"
                 android:drawablePadding="10dp"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/text_for_people_dialog"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

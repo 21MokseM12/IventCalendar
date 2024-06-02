@@ -2,8 +2,6 @@ package com.example.iventcalendar.service.decorators;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;

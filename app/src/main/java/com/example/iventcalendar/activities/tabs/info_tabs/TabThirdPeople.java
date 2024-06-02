@@ -30,7 +30,8 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     private static final String ARG_PEOPLE = "people";
     private List<String> people;
     public FloatingActionButton addPeople;
-    Dialog peopleDialog;
+    private Dialog peopleDialog;
+    private LocationAdapter adapter;
 
     public static TabThirdPeople newInstance(String arg) {
         TabThirdPeople fragment = new TabThirdPeople();
@@ -66,7 +67,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
 
         ListView locationsSettings = rootView.findViewById(R.id.peopleViewSettingsList);
         if (people == null) people = new ArrayList<>();
-        LocationAdapter adapter = new LocationAdapter(this.requireActivity(), people);
+        adapter = new LocationAdapter(this.requireActivity(), people);
         locationsSettings.setAdapter(adapter);
         return rootView;
     }
@@ -82,8 +83,10 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!people.contains(placeToAdd.getText().toString()))
+                    if (!people.contains(placeToAdd.getText().toString())) {
                         people.add(placeToAdd.getText().toString().trim());
+                        adapter.notifyDataSetChanged();
+                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 peopleDialog.dismiss();
             }

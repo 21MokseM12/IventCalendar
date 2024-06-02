@@ -27,7 +27,8 @@ import java.util.Objects;
 public class TabSecondLocation  extends Fragment implements FragmentDataListener {
     protected List<String> locations;
     private FloatingActionButton addLocation;
-    Dialog locationDialog;
+    private Dialog locationDialog;
+    private LocationAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab2_location_settings, container, false);
@@ -44,7 +45,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         });
 
         ListView locationsSettings = rootView.findViewById(R.id.locationsViewSettingsList);
-        LocationAdapter adapter = new LocationAdapter(this.requireActivity(), locations);
+        adapter = new LocationAdapter(this.requireActivity(), locations);
         locationsSettings.setAdapter(adapter);
         return rootView;
     }
@@ -60,8 +61,10 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!locations.contains(placeToAdd.getText().toString().trim()))
+                    if (!locations.contains(placeToAdd.getText().toString().trim())) {
                         locations.add(placeToAdd.getText().toString().trim());
+                        adapter.notifyDataSetChanged();
+                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 locationDialog.dismiss();
             }

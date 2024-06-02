@@ -22,6 +22,8 @@
                 android:drawableStart="@drawable/ic_location_city"
                 android:drawablePadding="10dp"
                 android:hint="@string/text_for_location_dialog"
+                android:maxLines="1"
+                android:inputType="text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

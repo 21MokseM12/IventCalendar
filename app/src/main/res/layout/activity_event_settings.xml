@@ -14,7 +14,7 @@
             android:id="@+id/title"
             android:fontFamily="@font/tt_travels_light"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:textColor="@color/black"
             android:gravity="center"
@@ -23,7 +23,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

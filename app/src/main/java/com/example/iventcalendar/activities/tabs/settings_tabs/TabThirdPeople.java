@@ -27,7 +27,8 @@ import java.util.Objects;
 public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     protected List<String> people;
     public FloatingActionButton addPeople;
-    Dialog peopleDialog;
+    private Dialog peopleDialog;
+    private LocationAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab3_people_settings, container, false);
@@ -44,7 +45,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         });
 
         ListView locationsSettings = rootView.findViewById(R.id.peopleViewSettingsList);
-        LocationAdapter adapter = new LocationAdapter(this.requireActivity(), people);
+        adapter = new LocationAdapter(this.requireActivity(), people);
         locationsSettings.setAdapter(adapter);
         return rootView;
     }
@@ -60,8 +61,10 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!people.contains(placeToAdd.getText().toString()))
+                    if (!people.contains(placeToAdd.getText().toString())) {
                         people.add(placeToAdd.getText().toString().trim());
+                        adapter.notifyDataSetChanged();
+                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 peopleDialog.dismiss();
             }
