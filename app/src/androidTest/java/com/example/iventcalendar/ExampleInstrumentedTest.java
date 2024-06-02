@@ -1,6 +1,7 @@
 package com.example.iventcalendar;
 
 import android.content.Context;
+import android.net.Uri;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,9 +27,7 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
 //        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 //        assertEquals("com.example.iventcalendar", appContext.getPackageName());
-        List<String> arr = new ArrayList<>();
-        StringBuilder builder = new StringBuilder();
-        for (String a : arr) builder.append(a);
-        System.out.println(builder);
+        Uri uri = Uri.parse("");
+        System.out.println(Uri.parse(""));
     }
 }

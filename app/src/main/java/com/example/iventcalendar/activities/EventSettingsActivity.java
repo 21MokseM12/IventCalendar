@@ -53,7 +53,7 @@ public class EventSettingsActivity extends AppCompatActivity {
 
         date = getIntent().getStringExtra("date");
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), date);
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
@@ -113,7 +113,6 @@ public class EventSettingsActivity extends AppCompatActivity {
                 try {
                     dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                     EventDAO eventDAO = dataBase.eventDAO();
-                    if (photoURI == null) photoURI = "";
                     if (locations == null) locations = "";
                     if (people == null) people = "";
                     if (!locations.isEmpty() || !people.isEmpty() || !photoURI.isEmpty()) {
@@ -138,5 +137,4 @@ public class EventSettingsActivity extends AppCompatActivity {
         });
         exitDialog.show();
     }
-    private String getDate() {return this.date;}
 }

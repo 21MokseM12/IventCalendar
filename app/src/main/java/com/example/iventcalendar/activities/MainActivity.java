@@ -50,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
         isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
-//        SharedPreferences.Editor editor1 = isFirstLaunch.edit();
-//        editor1.clear();
-//        editor1.apply();
         if (!isFirstLaunch.contains("true")) {
             firstDialog = new Dialog(MainActivity.this);
             showFirstDialog();
@@ -60,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("true", true);
             editor.apply();
         }
-//        System.out.println(isFirstLaunch.getAll());
 
         calendar = findViewById(R.id.calendarView);
         TextView titleApp = findViewById(R.id.titleOfApp);
@@ -88,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-//        this.clearEventDaysFlags();
-//        System.out.println(eventFlags.getAll());
 
         ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
         CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator();

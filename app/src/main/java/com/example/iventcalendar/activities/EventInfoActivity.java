@@ -1,16 +1,12 @@
 package com.example.iventcalendar.activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.activities.tabs.info_tabs.TabFirstPhotos;
@@ -24,10 +20,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -38,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.iventcalendar.ui.info.SectionsPagerAdapter;
 import com.example.iventcalendar.databinding.ActivityEventInfoBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,11 +40,9 @@ public class EventInfoActivity extends AppCompatActivity {
     private List<String> inputData;
     private List<String> outputData;
     private ActivityEventInfoBinding binding;
-    private Dialog waitDialog;
     private Dialog exitDialog;
     private EventDataBase dataBase;
     private String date;
-//    private ActivityResultLauncher<String> pLauncher;
 
 
     @SuppressLint("SetTextI18n")
@@ -61,15 +52,11 @@ public class EventInfoActivity extends AppCompatActivity {
         binding = ActivityEventInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        registerPermissionListener();
-//        checkMediaPermission();
-
         date = getIntent().getStringExtra("date");
 
         final Integer[] exist = {0};
         dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
         EventDAO eventDAO = dataBase.eventDAO();
-        waitDialog = new Dialog(EventInfoActivity.this);
         LiveData<Integer> liveDataExist = eventDAO.isEventExist(date);
         liveDataExist.observe(EventInfoActivity.this, new Observer<Integer>() {
             @Override
@@ -88,7 +75,7 @@ public class EventInfoActivity extends AppCompatActivity {
                                 inputData.add(String.valueOf(event.getCrazyCount()));
                             }
 
-                            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getApplicationContext(), getSupportFragmentManager(), inputData);
+                            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getApplicationContext(), getSupportFragmentManager(), inputData, date);
                             ViewPager viewPager = binding.viewPager;
                             viewPager.setAdapter(sectionsPagerAdapter);
                             viewPager.setOffscreenPageLimit(4);
@@ -96,7 +83,6 @@ public class EventInfoActivity extends AppCompatActivity {
                             tabs.setupWithViewPager(viewPager);
                             TextView title = binding.title;
                             title.setText(new String(Character.toChars(0x1f973)) + " МЕРОПРИЯТИЕ " + new String(Character.toChars(0x1f973)));
-                            waitDialog.dismiss();
 
                             exitDialog = new Dialog(EventInfoActivity.this);
                             getOnBackPressedDispatcher().addCallback(EventInfoActivity.this, new OnBackPressedCallback(true) {
@@ -136,6 +122,7 @@ public class EventInfoActivity extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deleteCopyFile();
                 exitDialog.dismiss();
                 finish();
             }
@@ -154,6 +141,16 @@ public class EventInfoActivity extends AppCompatActivity {
                         });
                     }
                     else if (!outputData.get(1).isEmpty() || !outputData.get(2).isEmpty() || !outputData.get(0).isEmpty()){
+                        File file = new File(getFilesDir(), date + "_copy.jpg");
+                        if (file.renameTo(new File(getFilesDir(), date + ".jpg"))) {
+                            String newUri = getFilesDir().getPath() + "/" + date + ".jpg";
+                            outputData.remove(0);
+                            outputData.add(0, newUri);
+                            System.out.println("File was overwritten");
+                        }
+                        else System.out.println("Something was wrong");
+
+
                         Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
                         Executors.newSingleThreadExecutor().execute(() -> {
                             eventDAO.upsertEvent(event);
@@ -168,5 +165,10 @@ public class EventInfoActivity extends AppCompatActivity {
         });
 
         exitDialog.show();
+    }
+    private void deleteCopyFile() {
+        File deletebaleFile = new File(getApplicationContext().getFilesDir(), date + "_copy.jpg");
+        if (deletebaleFile.delete()) System.out.println("Copy of file was deleted successful");
+        else System.out.println("Something was wrong");
     }
 }

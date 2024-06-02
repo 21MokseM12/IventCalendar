@@ -22,10 +22,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
+    private String date;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, String date) {
         super(fm);
         mContext = context;
+        this.date = date;
     }
 
     @Override
@@ -33,14 +35,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         //Returning the current tabs
         switch(position) {
             case 0:
-                TabFirstPhotos photosSettings = new TabFirstPhotos();
-                return photosSettings;
+                return TabFirstPhotos.newInstance(date);
             case 1:
-                TabSecondLocation locationSettings = new TabSecondLocation();
-                return locationSettings;
+                return new TabSecondLocation();
             case 2:
-                TabThirdPeople peopleSettings = new TabThirdPeople();
-                return peopleSettings;
+                return new TabThirdPeople();
             default: return null;
         }
     }

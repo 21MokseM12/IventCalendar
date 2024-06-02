@@ -23,14 +23,16 @@ import java.util.List;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private List<String> fragmentDataList;
+    private String date;
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm, List<String> data) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, List<String> data, String date) {
         super(fm);
         mContext = context;
         this.fragmentDataList = data;
+        this.date = date;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         //Returning the current tabs
         switch(position) {
             case 0:
-                return TabFirstPhotos.newInstance(fragmentDataList.get(position));
+                return TabFirstPhotos.newInstance(fragmentDataList.get(position), date);
             case 1:
                 return TabSecondLocation.newInstance(fragmentDataList.get(position));
             case 2:
