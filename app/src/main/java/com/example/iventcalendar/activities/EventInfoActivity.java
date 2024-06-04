@@ -2,6 +2,7 @@ package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -138,6 +139,7 @@ public class EventInfoActivity extends AppCompatActivity {
                         Executors.newSingleThreadExecutor().execute(() -> {
                             eventDAO.deleteEventByDate(date);
                             MainActivity.deleteEventDayFlag(date);
+                            MainActivity.subtractTotalEventDaysCount(date.substring(date.length()-4));
                         });
                     }
                     else if (!outputData.get(1).isEmpty() || !outputData.get(2).isEmpty() || !outputData.get(0).isEmpty()){

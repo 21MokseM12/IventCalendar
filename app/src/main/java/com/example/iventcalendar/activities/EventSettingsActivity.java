@@ -2,6 +2,7 @@ package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -121,6 +122,7 @@ public class EventSettingsActivity extends AppCompatActivity {
                             eventDAO.upsertEvent(event);
                         });
                         MainActivity.saveEventDayFlag(date);
+                        MainActivity.addTotalEventDaysCount(date.substring(date.length()-4));
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();

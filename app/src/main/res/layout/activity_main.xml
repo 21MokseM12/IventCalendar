@@ -13,7 +13,7 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/totalEventDays"
         android:fontFamily="@font/tt_travels_light"
         android:textSize="@dimen/font_size"
         android:layout_width="match_parent"

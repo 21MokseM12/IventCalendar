@@ -33,7 +33,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab3_people_settings, container, false);
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfPeopleSettings);
-        titleOfFragment.setText("С кем кочевряжились сегодня?)");
+        titleOfFragment.setText("Какие же сегодня были действующие лица?)");
         people = new ArrayList<>();
         addPeople = rootView.findViewById(R.id.addPeopleButton);
         peopleDialog = new Dialog(this.requireActivity());
