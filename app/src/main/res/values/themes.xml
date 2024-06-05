@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+
+        <item name="android:fontFamily">@font/deledda</item>
     </style>
 
     <style name="Theme.EventCalendar.NoActionBar" parent="Theme.EventCalendar">
@@ -32,5 +34,8 @@
     <style name="Theme.EventCalendar.NoActionBar.PopupOverlay">
         <item name="android:textColor">@color/black</item>
         <item name="background">@color/white</item>
+    </style>
+    <style name="tab_text" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:fontFamily">@font/deledda</item>
     </style>
 </resources>

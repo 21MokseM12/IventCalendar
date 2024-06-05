@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_people"
+                android:fontFamily="@font/deledda"
                 android:drawablePadding="10dp"
                 android:maxLines="1"
                 android:inputType="text"

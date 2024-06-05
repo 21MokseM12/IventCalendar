@@ -10,18 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/teal_200">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"/>
+
         <TextView
             android:id="@+id/title"
-            android:fontFamily="@font/tt_travels_light"
+            android:fontFamily="@font/kablammo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:textColor="@color/black"
             android:gravity="center"
             android:padding="@dimen/appbar_padding"
-            android:textSize="@dimen/bar_text_size"/>
+            android:textSize="@dimen/font_size"/>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
+            android:theme="@style/tab_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>

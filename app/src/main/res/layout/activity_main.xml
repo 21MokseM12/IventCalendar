@@ -3,9 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"/>
+
     <TextView
         android:id="@+id/titleOfApp"
-        android:fontFamily="@font/tt_travels_light"
+        android:fontFamily="@font/kablammo"
         android:textSize="@dimen/font_size"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -14,7 +20,6 @@
 
     <TextView
         android:id="@+id/totalEventDays"
-        android:fontFamily="@font/tt_travels_light"
         android:textSize="@dimen/font_size"
         android:layout_width="match_parent"
         android:layout_height="74dp"
@@ -27,6 +32,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:mcv_showOtherDates="all"
-        app:mcv_selectionColor="@color/white"
-        />
+        app:mcv_selectionColor="@color/white"/>
 </LinearLayout>

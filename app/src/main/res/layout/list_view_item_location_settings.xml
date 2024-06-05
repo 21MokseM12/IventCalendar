@@ -8,23 +8,23 @@
     <TextView
         android:id="@+id/location"
         android:gravity="center"
-        android:fontFamily="@font/tt_travels_light"
+        android:fontFamily="@font/deledda"
         android:layout_width="300dp"
         android:layout_height="56dp"
         android:text="Simple text"
+        android:textSize="@dimen/font_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteLocationActionButton"
-        app:maxImageSize="25dp"
-        app:fabSize="mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="10dp"
         android:clickable="true"
+        app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/location"
         app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="25dp"
         app:srcCompat="@android:drawable/ic_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>
