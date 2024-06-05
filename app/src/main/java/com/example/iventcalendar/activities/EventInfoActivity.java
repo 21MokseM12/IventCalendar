@@ -151,7 +151,6 @@ public class EventInfoActivity extends AppCompatActivity {
                         }
                         else System.out.println("Something was wrong");
 
-
                         Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
                         Executors.newSingleThreadExecutor().execute(() -> {
                             eventDAO.upsertEvent(event);
@@ -164,7 +163,6 @@ public class EventInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         exitDialog.show();
     }
     private void deleteCopyFile() {

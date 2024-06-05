@@ -14,9 +14,9 @@ public class ActiveEventDecorator implements DayViewDecorator {
     private final Drawable drawable;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public ActiveEventDecorator(Context context, SharedPreferences flags, int drawableResId) {
+    public ActiveEventDecorator(Context context, SharedPreferences flags, int resId) {
         this.flags = flags;
-        this.drawable = context.getDrawable(drawableResId);
+        this.drawable = context.getDrawable(resId);
     }
     @Override
     public boolean shouldDecorate(CalendarDay day) {
