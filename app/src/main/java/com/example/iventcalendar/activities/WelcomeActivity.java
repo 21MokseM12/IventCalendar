@@ -3,6 +3,8 @@ package com.example.iventcalendar.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,11 @@ import java.util.TimerTask;
 public class WelcomeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle saveInstanceState) {
+//        getWindow().setFlags(
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+//        );
+
         super.onCreate(saveInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_welcome);
@@ -27,13 +34,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
         image.setImageResource(R.drawable.oleg_image);
 
-//        Handler handler = new Handler();
-//
-//        handler.postDelayed(() -> {
-//            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }, 1500);
+//        Window window = getWindow();
+//        window.setFlags(
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+//        );
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         int delay = 1000;
         Timer timer = new Timer();
@@ -42,11 +49,11 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent in = new Intent().setClass(WelcomeActivity.this,
-                        MainActivity.class).addFlags(
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(in);
+//                Intent in = new Intent().setClass(WelcomeActivity.this,
+//                        MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent in = new Intent(WelcomeActivity.this, MainActivity.class);
                 finish();
+                startActivity(in);
 
             }
         };

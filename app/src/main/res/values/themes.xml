@@ -16,9 +16,13 @@
         <item name="android:windowFullscreen">true</item>
 
         <item name="android:fontFamily">@font/deledda</item>
+
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
     <style name="Theme.EventCalendar.NoActionBar" parent="Theme.EventCalendar">
+<!--        <item name=""-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorOnSecondary">@color/white</item>

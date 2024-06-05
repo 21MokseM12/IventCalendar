@@ -33,6 +33,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences eventFlags;
     private static SharedPreferences totalEventDays;
+    private SharedPreferences isFirstLaunch;
     private Dialog firstDialog;
     private MaterialCalendarView calendar;
     private TextView totalEventDaysView;
@@ -45,16 +46,13 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
+        isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
         totalEventDays = getSharedPreferences("Total_Event_Days", MODE_PRIVATE);
-
+        System.out.println("isFirstLaunch: " + isFirstLaunch.getAll());
         if (!isFirstLaunch.contains("true")) {
             firstDialog = new Dialog(MainActivity.this);
             showFirstDialog();
-            SharedPreferences.Editor editor = isFirstLaunch.edit();
-            editor.putBoolean("true", true);
-            editor.apply();
         }
 
 
@@ -125,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = isFirstLaunch.edit();
+                editor.putBoolean("true", true);
+                editor.apply();
                 firstDialog.dismiss();
             }
         });

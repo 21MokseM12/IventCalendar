@@ -2,7 +2,6 @@ package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -56,8 +55,8 @@ public class EventSettingsActivity extends AppCompatActivity {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), date);
         ViewPager viewPager = binding.viewPager;
+        viewPager.setOffscreenPageLimit(10);
         viewPager.setAdapter(sectionsPagerAdapter);
-        viewPager.setOffscreenPageLimit(2);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
         TextView title = binding.title;
