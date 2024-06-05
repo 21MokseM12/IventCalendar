@@ -65,7 +65,14 @@ public class EventSettingsActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                showExitDialog();
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                for (Fragment fragment: fragments) {
+                    if (fragment instanceof TabSecondLocation) locations = ((TabSecondLocation) fragment).getFragmentData();
+                    else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
+                    else if (fragment instanceof TabFirstPhotos) photoURI = ((TabFirstPhotos) fragment).getFragmentData();
+                }
+                if (locations.isEmpty() && people.isEmpty() && photoURI.isEmpty()) finish();
+                else showExitDialog();
             }
         });
     }
@@ -102,14 +109,7 @@ public class EventSettingsActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Fragment> fragments = getSupportFragmentManager().getFragments();
-                for (Fragment fragment: fragments) {
-                    if (fragment instanceof TabSecondLocation) locations = ((TabSecondLocation) fragment).getFragmentData();
-                    else if (fragment instanceof TabThirdPeople) people = ((TabThirdPeople) fragment).getFragmentData();
-                    else if (fragment instanceof TabFirstPhotos) photoURI = ((TabFirstPhotos) fragment).getFragmentData();
-                }
                 exitDialog.dismiss();
-
                 try {
                     dataBase = Room.databaseBuilder(getApplicationContext(), EventDataBase.class, "app-database").build();
                     EventDAO eventDAO = dataBase.eventDAO();
