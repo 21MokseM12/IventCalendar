@@ -23,9 +23,7 @@ public class CurrentDateDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-//        view.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         view.setSelectionDrawable(drawable);
-
     }
     public void setDate(CalendarDay day) {date = day;}
 }

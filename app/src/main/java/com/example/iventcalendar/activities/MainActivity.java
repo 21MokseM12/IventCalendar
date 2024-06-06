@@ -30,14 +30,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static SharedPreferences eventFlags;
     private static SharedPreferences totalEventDays;
     private SharedPreferences isFirstLaunch;
     private Dialog firstDialog;
     private MaterialCalendarView calendar;
     private TextView totalEventDaysView;
-    private TextView titleApp;
     private String key;
     @SuppressLint("SetTextI18n")
     @Override
@@ -49,14 +48,15 @@ public class MainActivity extends AppCompatActivity {
         isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
         totalEventDays = getSharedPreferences("Total_Event_Days", MODE_PRIVATE);
-        System.out.println("isFirstLaunch: " + isFirstLaunch.getAll());
+        totalEventDays.registerOnSharedPreferenceChangeListener(this);
+
         if (!isFirstLaunch.contains("true")) {
             firstDialog = new Dialog(MainActivity.this);
             showFirstDialog();
         }
 
 
-        titleApp = findViewById(R.id.titleOfApp);
+        TextView titleApp = findViewById(R.id.titleOfApp);
         titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
 
 
@@ -64,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
         String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         totalEventDaysView.setText("Мероприятий за год: " +
                 totalEventDays.getInt(currentYear, 0));
-        totalEventDays.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-                totalEventDaysView.setText("Мероприятий за год: " + sharedPreferences.getInt(key, 0));
-            }
-        });
 
 
         calendar = findViewById(R.id.calendarView);
@@ -141,11 +135,16 @@ public class MainActivity extends AppCompatActivity {
         editor.remove(key);
         editor.apply();
     }
-    protected static SharedPreferences getTotalEventDays() {return totalEventDays;}
     protected static void addTotalEventDaysCount(String year) {
         totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)+1).apply();
     }
     protected static void subtractTotalEventDaysCount(String year) {
         totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)-1).apply();
+    }
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        TextView total = findViewById(R.id.totalEventDays);
+        total.setText("Мероприятий за год: " + sharedPreferences.getInt(key, 0));
     }
 }
