@@ -55,7 +55,6 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfLocationsSettings);
         titleOfFragment.setText("Круто попутешествовали, правда?");
 
-
         addLocation = rootView.findViewById(R.id.addLocationButton);
         locationDialog = new Dialog(this.requireActivity());
         addLocation.setOnClickListener(new View.OnClickListener() {
@@ -99,4 +98,3 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         return builder.toString().trim();
     }
 }
-

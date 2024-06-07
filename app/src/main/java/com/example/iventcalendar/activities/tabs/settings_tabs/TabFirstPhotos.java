@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.Objects;
 
 public class TabFirstPhotos extends Fragment implements FragmentDataListener {
     private static final String ARG_DATE = "date";
@@ -87,7 +86,6 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
             if (input == null) return;
 
             File outputFile = new File(context.getFilesDir(), date + ".jpg");
-            System.out.println(outputFile.toPath().toAbsolutePath().toString());
             try (OutputStream output = Files.newOutputStream(outputFile.toPath())) {
                 byte[] buffer = new byte[4096];
                 int bytesRead;
@@ -96,7 +94,6 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
                 }
             }
             photoURI = Uri.fromFile(outputFile);
-            System.out.println(photoURI.getPath());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,14 +1,12 @@
 package com.example.iventcalendar.activities.tabs.settings_tabs;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,9 +53,6 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         peopleDialog.setContentView(R.layout.custom_settings_people_dialog);
         Objects.requireNonNull(peopleDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         peopleDialog.setCancelable(true);
-
-//        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         EditText placeToAdd = peopleDialog.findViewById(R.id.setPeopleText);
         MaterialButton toAddButton = peopleDialog.findViewById(R.id.addPeopleButton);

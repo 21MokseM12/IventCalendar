@@ -14,11 +14,6 @@ import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentD
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 public class TabFourthCrazyCount  extends Fragment implements FragmentDataListener {
     private final static String ARG_CRAZY = "crazyCount";
     private int crazyCount = 0;

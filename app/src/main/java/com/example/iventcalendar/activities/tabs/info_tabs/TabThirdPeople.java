@@ -100,4 +100,3 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         return builder.toString().trim();
     }
 }
-

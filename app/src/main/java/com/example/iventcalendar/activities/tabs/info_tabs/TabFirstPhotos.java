@@ -51,7 +51,6 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
         if (getArguments() != null) {
             photoURI = Uri.parse(getArguments().getString(ARG_PHOTO_URI));
             date = getArguments().getString(ARG_DATE);
-            System.out.println(photoURI.getPath());
         }
     }
     @Override
@@ -113,10 +112,8 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                 }
             }
             photoURI = Uri.fromFile(outputFile);
-            System.out.println(photoURI.getPath());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-

@@ -1,6 +1,5 @@
 package com.example.iventcalendar.service.database;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
