@@ -33,8 +33,8 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent in = new Intent(WelcomeActivity.this, MainActivity.class);
-                finish();
                 startActivity(in);
+                finish();
 
             }
         };
