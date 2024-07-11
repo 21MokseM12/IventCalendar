@@ -61,6 +61,7 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
         title.setText("Весь день в одной фотографии:");
         photo = rootView.findViewById(R.id.image);
         MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
+        MaterialButton deletePhotoButton = rootView.findViewById(R.id.deletePhotoButton);
 
         if (!photoURI.equals(Uri.parse(""))) {
             Glide.with(rootView).load(new File(requireActivity().getApplicationContext().getFilesDir() + "/" + date + ".jpg"))
@@ -81,7 +82,6 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                                     .load(o)
                                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                                     .into(photo);
-                            photo.setImageURI(o);
                             saveTheImageByUriInApplicationStorage(o);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -95,9 +95,21 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                 galleryLauncher.launch("image/*");
             }
         });
+
+        deletePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                photo.setImageResource(0);
+                photoURI = null;
+            }
+        });
         return rootView;
     }
-    public String getFragmentData() {return this.photoURI.getPath();}
+    public String getFragmentData() {
+        if (photoURI == null) return "";
+        return this.photoURI.getPath();
+    }
+
     private void saveTheImageByUriInApplicationStorage(Uri imageUri) {
         Context context = requireContext().getApplicationContext();
         try (InputStream input = context.getContentResolver().openInputStream(imageUri)) {

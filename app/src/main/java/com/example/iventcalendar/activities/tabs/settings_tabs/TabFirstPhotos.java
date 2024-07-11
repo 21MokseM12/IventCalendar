@@ -52,6 +52,7 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
         title.setText("Выбери фото, которое лучше всего описывает иВеНт)");
         ImageView photo = rootView.findViewById(R.id.image);
         MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
+        MaterialButton deletePhotoButton = rootView.findViewById(R.id.deletePhotoButton);
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
@@ -69,6 +70,15 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
             @Override
             public void onClick(View v) {
                 galleryLauncher.launch("image/*");
+            }
+        });
+
+        deletePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                photo.setImageResource(0);
+                photoURI = null;
+                deletePhotoFile(date);
             }
         });
 
@@ -97,5 +107,12 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void deletePhotoFile(String date) {
+        Context context = requireContext().getApplicationContext();
+        File deletebaleFile = new File(context.getFilesDir(), date + ".jpg");
+        if (deletebaleFile.delete()) System.out.println("Copy of file was deleted successful");
+        else System.out.println("Something was wrong");
     }
 }

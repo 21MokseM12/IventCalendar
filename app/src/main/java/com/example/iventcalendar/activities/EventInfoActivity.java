@@ -2,6 +2,7 @@ package com.example.iventcalendar.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -95,10 +96,7 @@ public class EventInfoActivity extends AppCompatActivity {
                                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                                     outputData = new ArrayList<>();
                                     for (Fragment fragment: fragments) {
-                                        if (fragment instanceof TabFirstPhotos) {
-                                            if (((TabFirstPhotos) fragment).getFragmentData() == null) outputData.add("");
-                                            else outputData.add(((TabFirstPhotos) fragment).getFragmentData());
-                                        }
+                                        if (fragment instanceof TabFirstPhotos) outputData.add(((TabFirstPhotos) fragment).getFragmentData());
                                         else if (fragment instanceof TabSecondLocation) outputData.add(((TabSecondLocation) fragment).getFragmentData());
                                         else if (fragment instanceof TabThirdPeople) outputData.add(((TabThirdPeople) fragment).getFragmentData());
                                         else if (fragment instanceof TabFourthCrazyCount) outputData.add(((TabFourthCrazyCount) fragment).getFragmentData());
@@ -147,14 +145,8 @@ public class EventInfoActivity extends AppCompatActivity {
                         });
                     }
                     else if (!outputData.get(1).isEmpty() || !outputData.get(2).isEmpty() || !outputData.get(0).isEmpty()){
-                        File file = new File(getFilesDir(), date + "_copy.jpg");
-                        if (file.renameTo(new File(getFilesDir(), date + ".jpg"))) {
-                            String newUri = getFilesDir().getPath() + "/" + date + ".jpg";
-                            outputData.remove(0);
-                            outputData.add(0, newUri);
-                            System.out.println("File was overwritten");
-                        }
-                        else System.out.println("Something was wrong");
+                        if (outputData.get(0).isEmpty()) deletePhotoFiles(date);
+                        else renameCopyFile();
 
                         Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
                         Executors.newSingleThreadExecutor().execute(() -> {
@@ -174,6 +166,24 @@ public class EventInfoActivity extends AppCompatActivity {
     private void deleteCopyFile() {
         File deletebaleFile = new File(getApplicationContext().getFilesDir(), date + "_copy.jpg");
         if (deletebaleFile.delete()) System.out.println("Copy of file was deleted successful");
+        else System.out.println("Something was wrong");
+    }
+
+    private void deletePhotoFiles(String date) {
+        File deletebaleFile = new File(getApplicationContext().getFilesDir(), date + ".jpg");
+        File deletebaleCopyFile = new File(getApplicationContext().getFilesDir(), date + "_copy.jpg");
+        if (deletebaleFile.delete() || deletebaleCopyFile.delete()) System.out.println("Copy of file was deleted successful");
+        else System.out.println("Something was wrong");
+    }
+
+    private void renameCopyFile() {
+        File file = new File(getFilesDir(), date + "_copy.jpg");
+        if (file.renameTo(new File(getFilesDir(), date + ".jpg"))) {
+            String newUri = getFilesDir().getPath() + "/" + date + ".jpg";
+            outputData.remove(0);
+            outputData.add(0, newUri);
+            System.out.println("File was overwritten");
+        }
         else System.out.println("Something was wrong");
     }
 }

@@ -20,15 +20,29 @@
         tools:layout_constraintTop_creator="1" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="20dp"
         android:id="@+id/changePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
         android:text="@string/change_photo"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deletePhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/delete_photo"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePhotoButton"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -36,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="140dp"
         android:scaleType="fitXY"
