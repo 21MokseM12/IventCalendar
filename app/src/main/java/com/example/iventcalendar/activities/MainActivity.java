@@ -29,12 +29,19 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static SharedPreferences eventFlags;
+
     private static SharedPreferences totalEventDays;
+
     private SharedPreferences isFirstLaunch;
+
     private Dialog firstDialog;
+
     private MaterialCalendarView calendar;
+
     private TextView totalEventDaysView;
+
     private String key;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +54,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         totalEventDays = getSharedPreferences("Total_Event_Days", MODE_PRIVATE);
         totalEventDays.registerOnSharedPreferenceChangeListener(this);
 
-        if (!isFirstLaunch.contains("true")) {
-            firstDialog = new Dialog(MainActivity.this);
-            showFirstDialog();
-        }
-
+        if (!isFirstLaunch.contains("true")) showFirstDialog();
 
         TextView titleApp = findViewById(R.id.titleOfApp);
         titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
-
 
         totalEventDaysView = findViewById(R.id.totalEventDays);
         String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         totalEventDaysView.setText("Мероприятий за год: " +
                 totalEventDays.getInt(currentYear, 0));
-
 
         calendar = findViewById(R.id.calendarView);
         calendar.setOnMonthChangedListener(new OnMonthChangedListener() {
@@ -105,7 +106,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
 
     }
+
     private void showFirstDialog() {
+        firstDialog = new Dialog(MainActivity.this);
         firstDialog.setContentView(R.layout.custom_first_launch_dialog);
         Objects.requireNonNull(firstDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         firstDialog.setCancelable(false);
@@ -122,22 +125,27 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
         firstDialog.show();
     }
+
     protected static void saveEventDayFlag(String date) {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.putBoolean(date, true);
         editor.apply();
     }
+
     protected static void deleteEventDayFlag(String key) {
         SharedPreferences.Editor editor = eventFlags.edit();
         editor.remove(key);
         editor.apply();
     }
+
     protected static void addTotalEventDaysCount(String year) {
         totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)+1).apply();
     }
+
     protected static void subtractTotalEventDaysCount(String year) {
         totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)-1).apply();
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {

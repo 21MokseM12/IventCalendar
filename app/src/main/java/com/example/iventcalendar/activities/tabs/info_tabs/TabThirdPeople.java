@@ -46,7 +46,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         if (getArguments() != null) {
             if (Objects.equals(getArguments().getString(ARG_PEOPLE), "")) people = new ArrayList<>();
             else if (getArguments().getString(ARG_PEOPLE) != null)
-                people = Arrays.stream(requireArguments().getString(ARG_PEOPLE).split(" ")).collect(Collectors.toList());
+                people = Arrays.stream(requireArguments().getString(ARG_PEOPLE).split(";")).collect(Collectors.toList());
         }
     }
 
@@ -83,10 +83,10 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!people.contains(placeToAdd.getText().toString())) {
+//                    if (!people.contains(placeToAdd.getText().toString())) {
                         people.add(placeToAdd.getText().toString().trim());
                         adapter.notifyDataSetChanged();
-                    }
+//                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 peopleDialog.dismiss();
             }
@@ -96,7 +96,7 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     }
     public String getFragmentData() {
         StringBuilder builder = new StringBuilder();
-        for (String guy : people) builder.append(guy).append(' ');
+        for (String guy : people) builder.append(guy).append(';');
         return builder.toString().trim();
     }
 }

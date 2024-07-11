@@ -34,15 +34,22 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 
 public class EventSettingsActivity extends AppCompatActivity {
-
     private ActivityEventSettingsBinding binding;
+
     private EventDataBase dataBase;
+
     private String date;
+
     private Dialog exitDialog;
+
     private String photoURI;
+
     private String locations;
+
     private String people;
+
     private int crazyCount = 0;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,7 @@ public class EventSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showExitDialog() {
         exitDialog.setContentView(R.layout.custom_exit_dialog);
         Objects.requireNonNull(exitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

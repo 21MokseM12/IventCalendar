@@ -38,12 +38,16 @@ import java.util.concurrent.Executors;
 
 public class EventInfoActivity extends AppCompatActivity {
     private List<String> inputData;
-    private List<String> outputData;
-    private ActivityEventInfoBinding binding;
-    private Dialog exitDialog;
-    private EventDataBase dataBase;
-    private String date;
 
+    private List<String> outputData;
+
+    private ActivityEventInfoBinding binding;
+
+    private Dialog exitDialog;
+
+    private EventDataBase dataBase;
+
+    private String date;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -109,6 +113,7 @@ public class EventInfoActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showExitDialog() {
         exitDialog.setContentView(R.layout.confirm_changes_dialog);
         Objects.requireNonNull(exitDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -165,6 +170,7 @@ public class EventInfoActivity extends AppCompatActivity {
         });
         exitDialog.show();
     }
+
     private void deleteCopyFile() {
         File deletebaleFile = new File(getApplicationContext().getFilesDir(), date + "_copy.jpg");
         if (deletebaleFile.delete()) System.out.println("Copy of file was deleted successful");

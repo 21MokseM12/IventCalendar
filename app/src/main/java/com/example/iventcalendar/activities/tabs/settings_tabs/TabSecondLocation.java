@@ -61,10 +61,10 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!locations.contains(placeToAdd.getText().toString().trim())) {
+//                    if (!locations.contains(placeToAdd.getText().toString().trim())) {
                         locations.add(placeToAdd.getText().toString().trim());
                         adapter.notifyDataSetChanged();
-                    }
+//                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 locationDialog.dismiss();
             }
@@ -74,7 +74,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
     }
     public String getFragmentData() {
         StringBuilder builder = new StringBuilder();
-        for (String location : locations) builder.append(location).append(' ');
+        for (String location : locations) builder.append(location).append(';');
         return builder.toString().trim();
     }
 }

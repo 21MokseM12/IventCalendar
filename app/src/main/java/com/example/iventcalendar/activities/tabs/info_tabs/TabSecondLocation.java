@@ -46,7 +46,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         if (getArguments() != null) {
             if (Objects.equals(getArguments().getString(ARG_LOCATIONS), "")) locations = new ArrayList<>();
             else if (getArguments().getString(ARG_LOCATIONS) != null)
-                locations = Arrays.stream(requireArguments().getString(ARG_LOCATIONS).split(" ")).collect(Collectors.toList());
+                locations = Arrays.stream(requireArguments().getString(ARG_LOCATIONS).split(";")).collect(Collectors.toList());
         }
     }
     @Override
@@ -81,10 +81,10 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
             @Override
             public void onClick(View v) {
                 if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    if (!locations.contains(placeToAdd.getText().toString().trim())) {
+//                    if (!locations.contains(placeToAdd.getText().toString().trim())) {
                         locations.add(placeToAdd.getText().toString());
                         adapter.notifyDataSetChanged();
-                    }
+//                    }
                 } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
                 locationDialog.dismiss();
             }
@@ -94,7 +94,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
     }
     public String getFragmentData() {
         StringBuilder builder = new StringBuilder();
-        for (String location : locations) builder.append(location).append(' ');
+        for (String location : locations) builder.append(location).append(';');
         return builder.toString().trim();
     }
 }
