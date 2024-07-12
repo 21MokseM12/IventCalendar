@@ -80,8 +80,8 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
 
         toAddButton.setOnClickListener(v -> {
             if (!placeToAdd.getText().toString().trim().isEmpty()) {
-                    locations.add(placeToAdd.getText().toString());
-                    adapter.notifyDataSetChanged();
+                locations.add(placeToAdd.getText().toString());
+                adapter.notifyDataSetChanged();
             } else Toast.makeText(requireContext(), R.string.push_no_text_message, Toast.LENGTH_LONG).show();
             locationDialog.dismiss();
         });
