@@ -61,7 +61,6 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         titleOfFragment.setText(R.string.title_tab_locations_info);
 
         FloatingActionButton addLocation = rootView.findViewById(R.id.addLocationButton);
-        locationDialog = new Dialog(this.requireActivity());
         addLocation.setOnClickListener(v -> showCustomDialog());
 
         ListView locationsSettings = rootView.findViewById(R.id.locationsViewSettingsList);
@@ -71,6 +70,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
     }
 
     private void showCustomDialog() {
+        locationDialog = new Dialog(this.requireActivity());
         locationDialog.setContentView(R.layout.custom_settings_location_dialog);
         Objects.requireNonNull(locationDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         locationDialog.setCancelable(true);
