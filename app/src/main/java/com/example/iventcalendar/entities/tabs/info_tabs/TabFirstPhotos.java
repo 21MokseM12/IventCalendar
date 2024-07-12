@@ -1,4 +1,4 @@
-package com.example.iventcalendar.activities.tabs.info_tabs;
+package com.example.iventcalendar.entities.tabs.info_tabs;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
@@ -20,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.activities.tabs.settings_tabs.service.FragmentDataListener;
+import com.example.iventcalendar.services.interfaces.listeners.FragmentDataListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
@@ -29,12 +28,19 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 
 public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
+
     private static final String ARG_PHOTO_URI = "photoURI";
+
     private static final String ARG_DATE = "date";
+
     private String date;
+
     private Uri photoURI;
+
     private ActivityResultLauncher<String> galleryLauncher;
+
     private ImageView photo;
+
     private View rootView;
 
     public static TabFirstPhotos newInstance(String uri, String date) {
@@ -45,6 +51,7 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +60,14 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
             date = getArguments().getString(ARG_DATE);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.tab1_photos_settings, container, false);
 
         TextView title = rootView.findViewById(R.id.photoTitle);
-        title.setText("Весь день в одной фотографии:");
+        title.setText(R.string.title_tab_photos_info);
+
         photo = rootView.findViewById(R.id.image);
         MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
         MaterialButton deletePhotoButton = rootView.findViewById(R.id.deletePhotoButton);
@@ -69,42 +78,32 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(photo);
-        } else Toast.makeText(requireContext(), "Фото не было выбрано(", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(requireContext(), R.string.push_no_photo_message, Toast.LENGTH_LONG).show();
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
-                new ActivityResultCallback<Uri>() {
-                    @Override
-                    public void onActivityResult(Uri o) {
-                        try {
-                            if (o == null) return;
-                            Glide.with(rootView)
-                                    .load(o)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                    .into(photo);
-                            saveTheImageByUriInApplicationStorage(o);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                o -> {
+                    try {
+                        if (o == null) return;
+                        Glide.with(rootView)
+                                .load(o)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                .into(photo);
+                        saveTheImageByUriInApplicationStorage(o);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
         );
-        changePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryLauncher.launch("image/*");
-            }
-        });
+        changePhotoButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
 
-        deletePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                photo.setImageResource(0);
-                photoURI = null;
-            }
+        deletePhotoButton.setOnClickListener(view -> {
+            photo.setImageResource(0);
+            photoURI = null;
         });
         return rootView;
     }
+
     public String getFragmentData() {
         if (photoURI == null) return "";
         return this.photoURI.getPath();

@@ -1,4 +1,4 @@
-package com.example.iventcalendar.activities.tabs.settings_tabs.service;
+package com.example.iventcalendar.services.implementations.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,13 +15,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class LocationAdapter extends ArrayAdapter {
-    private Context context;
-    private List<String> locations;
-    public LocationAdapter(Context context, List<String> locations) {
-        super(context, R.layout.list_view_item_location_settings, locations);
+public class ListViewAdapter extends ArrayAdapter {
+    private final Context context;
+    private final List<String> listViewContent;
+    public ListViewAdapter(Context context, List<String> listViewContent) {
+        super(context, R.layout.list_view_item_location_settings, listViewContent);
         this.context = context;
-        this.locations = locations;
+        this.listViewContent = listViewContent;
     }
 
     @Override
@@ -31,14 +31,11 @@ public class LocationAdapter extends ArrayAdapter {
         View view = inflater.inflate(R.layout.list_view_item_location_settings, parent, false);
         TextView location = view.findViewById(R.id.location);
         FloatingActionButton deleteLocation = view.findViewById(R.id.deleteLocationActionButton);
-        deleteLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locations.remove(position);
-                LocationAdapter.super.notifyDataSetChanged();
-            }
+        deleteLocation.setOnClickListener(v -> {
+            listViewContent.remove(position);
+            ListViewAdapter.super.notifyDataSetChanged();
         });
-        location.setText(locations.get(position));
+        location.setText(listViewContent.get(position));
         return view;
     }
 }

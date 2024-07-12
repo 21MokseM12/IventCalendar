@@ -1,9 +1,10 @@
-package com.example.iventcalendar.service.database;
+package com.example.iventcalendar.services.implementations.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.example.iventcalendar.entities.Event;
+import com.example.iventcalendar.entities.database.Event;
+import com.example.iventcalendar.services.interfaces.database.EventDAO;
 
 @Database(
         entities = {Event.class},

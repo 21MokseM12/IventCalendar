@@ -1,4 +1,4 @@
-package com.example.iventcalendar.activities.tabs.settings_tabs.service;
+package com.example.iventcalendar.services.interfaces.listeners;
 
 public interface FragmentDataListener {
     String getFragmentData();
