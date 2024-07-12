@@ -50,7 +50,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         if (getArguments() != null) {
             if (Objects.equals(getArguments().getString(ARG_LOCATIONS), "")) locations = new ArrayList<>();
             else if (getArguments().getString(ARG_LOCATIONS) != null)
-                locations = Arrays.stream(requireArguments().getString(ARG_LOCATIONS).split(";")).collect(Collectors.toList());
+                locations = Arrays.stream(Objects.requireNonNull(requireArguments().getString(ARG_LOCATIONS)).split(";")).collect(Collectors.toList());
         }
     }
 
