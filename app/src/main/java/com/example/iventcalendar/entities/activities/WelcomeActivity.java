@@ -1,4 +1,4 @@
-package com.example.iventcalendar.activities;
+package com.example.iventcalendar.entities.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         TextView text = findViewById(R.id.oleg);
         ImageView image = findViewById(R.id.olegImage);
-        text.setText("Олег");
+        text.setText(R.string.splash_screen_text);
 
         image.setImageResource(R.drawable.oleg_image);
 
