@@ -120,9 +120,7 @@ public class EventSettingsActivity extends AppCompatActivity {
                 if (!locations.isEmpty() || !people.isEmpty() || !photoURI.isEmpty()) {
                     Event event = new Event(date, photoURI, locations, people, crazyCount);
 
-                    Executors.newSingleThreadExecutor().execute(() -> {
-                        eventDAO.upsertEvent(event);
-                    });
+                    Executors.newSingleThreadExecutor().execute(() -> eventDAO.upsertEvent(event));
 
                     SharedPreferencesManager.saveBoolean(MainActivity.getEventFlags(), date, true);
                     SharedPreferencesManager.incrementIntByKey(MainActivity.getTotalEventDays(),

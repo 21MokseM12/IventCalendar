@@ -155,9 +155,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
                     Event event = new Event(date, outputData.get(0), outputData.get(1), outputData.get(2), Integer.parseInt(outputData.get(3)));
 
-                    Executors.newSingleThreadExecutor().execute(() -> {
-                        eventDAO.upsertEvent(event);
-                    });
+                    Executors.newSingleThreadExecutor().execute(() -> eventDAO.upsertEvent(event));
 
                     SharedPreferencesManager.saveBoolean(MainActivity.getEventFlags(), date, true);
                 }
