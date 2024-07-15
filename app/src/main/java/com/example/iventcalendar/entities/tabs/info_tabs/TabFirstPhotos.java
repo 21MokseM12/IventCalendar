@@ -1,6 +1,5 @@
 package com.example.iventcalendar.entities.tabs.info_tabs;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,18 +13,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.managers.PhotoFileManager;
+import com.example.iventcalendar.managers.PhotoFormatManager;
 import com.example.iventcalendar.services.interfaces.listeners.FragmentDataListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 
 public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
 
@@ -46,6 +40,7 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
     public static TabFirstPhotos newInstance(String uri, String date) {
         TabFirstPhotos fragment = new TabFirstPhotos();
         Bundle args = new Bundle();
+
         args.putString(ARG_PHOTO_URI, uri);
         args.putString(ARG_DATE, date);
         fragment.setArguments(args);
@@ -55,6 +50,7 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             photoURI = Uri.parse(getArguments().getString(ARG_PHOTO_URI));
             date = getArguments().getString(ARG_DATE);
@@ -73,11 +69,9 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
         MaterialButton deletePhotoButton = rootView.findViewById(R.id.deletePhotoButton);
 
         if (!photoURI.equals(Uri.parse(""))) {
-            Glide.with(rootView).load(new File(requireActivity().getApplicationContext().getFilesDir() + "/" + date + ".jpg"))
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .into(photo);
+            PhotoFormatManager.formatPhotoByFile(rootView,
+                    new File(requireActivity().getApplicationContext().getFilesDir() + "/" + date + ".jpg"),
+                    photo);
         } else Toast.makeText(requireContext(), R.string.push_no_photo_message, Toast.LENGTH_LONG).show();
 
         galleryLauncher = registerForActivityResult(
@@ -85,46 +79,36 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
                 o -> {
                     try {
                         if (o == null) return;
-                        Glide.with(rootView)
-                                .load(o)
-                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                .into(photo);
-                        saveTheImageByUriInApplicationStorage(o);
+                        PhotoFormatManager.formatPhotoByUri(rootView, o, photo);
+                        File savedImageFile = PhotoFileManager.saveImageByUri(requireContext().getApplicationContext(),
+                                o,
+                                date + "_copy.jpg");
+                        photoURI = Uri.fromFile(savedImageFile);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
         );
-        changePhotoButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
 
-        deletePhotoButton.setOnClickListener(view -> {
+        changePhotoButton.setOnClickListener(onClickChangePhoto());
+        deletePhotoButton.setOnClickListener(onClickDeletePhoto());
+
+        return rootView;
+    }
+
+    private View.OnClickListener onClickChangePhoto() {
+        return v -> galleryLauncher.launch("image/*");
+    }
+
+    private View.OnClickListener onClickDeletePhoto() {
+        return view -> {
             photo.setImageResource(0);
             photoURI = Uri.parse("");
-        });
-        return rootView;
+        };
     }
 
     public String getFragmentData() {
         if (photoURI == null) return "";
         return this.photoURI.getPath();
-    }
-
-    private void saveTheImageByUriInApplicationStorage(Uri imageUri) {
-        Context context = requireContext().getApplicationContext();
-        try (InputStream input = context.getContentResolver().openInputStream(imageUri)) {
-            if (input == null) return;
-
-            File outputFile = new File(context.getFilesDir(), date + "_copy.jpg");
-            try (OutputStream output = Files.newOutputStream(outputFile.toPath())) {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = input.read(buffer)) != -1) {
-                    output.write(buffer, 0, bytesRead);
-                }
-            }
-            photoURI = Uri.fromFile(outputFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

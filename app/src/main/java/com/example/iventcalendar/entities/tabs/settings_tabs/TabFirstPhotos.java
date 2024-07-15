@@ -12,10 +12,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.iventcalendar.R;
+import com.example.iventcalendar.managers.PhotoFormatManager;
 import com.example.iventcalendar.services.interfaces.listeners.FragmentDataListener;
 import com.example.iventcalendar.managers.PhotoFileManager;
 import com.google.android.material.button.MaterialButton;
@@ -32,9 +30,12 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
 
     private ActivityResultLauncher<String> galleryLauncher;
 
+    private ImageView photo;
+
     public static TabFirstPhotos newInstance(String arg) {
         TabFirstPhotos fragment = new TabFirstPhotos();
         Bundle args = new Bundle();
+
         args.putString(ARG_DATE, arg);
         fragment.setArguments(args);
         return fragment;
@@ -43,6 +44,7 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null)
             date = getArguments().getString(ARG_DATE);
     }
@@ -50,9 +52,11 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1_photos_settings, container, false);
+
         TextView title = rootView.findViewById(R.id.photoTitle);
         title.setText(R.string.title_tab_photos_settings);
-        ImageView photo = rootView.findViewById(R.id.image);
+
+        photo = rootView.findViewById(R.id.image);
         MaterialButton changePhotoButton = rootView.findViewById(R.id.changePhotoButton);
         MaterialButton deletePhotoButton = rootView.findViewById(R.id.deletePhotoButton);
 
@@ -60,8 +64,7 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
                 new ActivityResultContracts.GetContent(),
                 o -> {
                     if (o == null) return;
-                    Glide.with(rootView).load(o).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(photo);
-                    photo.setImageURI(o);
+                    PhotoFormatManager.formatPhotoByUri(rootView, o, photo);
                     File savedImageFile = PhotoFileManager.saveImageByUri(
                             requireContext().getApplicationContext(),
                             o,
@@ -69,17 +72,25 @@ public class TabFirstPhotos extends Fragment implements FragmentDataListener {
                     photoURI = Uri.fromFile(savedImageFile);
                 }
         );
-        changePhotoButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
 
-        deletePhotoButton.setOnClickListener(view -> {
+        changePhotoButton.setOnClickListener(onClickChangePhoto());
+        deletePhotoButton.setOnClickListener(onClickDeletePhoto());
+
+        return rootView;
+    }
+
+    private View.OnClickListener onClickChangePhoto() {
+        return v -> galleryLauncher.launch("image/*");
+    }
+
+    private View.OnClickListener onClickDeletePhoto() {
+        return view -> {
             photo.setImageResource(0);
             photoURI = null;
             PhotoFileManager.deletePhotoFile(
                     requireContext().getApplicationContext(),
                     date + ".jpg");
-        });
-
-        return rootView;
+        };
     }
 
     @Override
