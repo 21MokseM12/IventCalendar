@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             else toSettingsActivityListener.onClick(widget);
         });
 
+
     }
 
     private void showFirstDialog() {
@@ -102,11 +103,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         firstDialog.setCancelable(false);
         MaterialButton button = firstDialog.findViewById(R.id.firstLaunchButton);
         button.setText(R.string.oyoyoy);
-        button.setOnClickListener(v -> {
+        button.setOnClickListener(onClickFirstDialogButton());
+        firstDialog.show();
+    }
+
+    private View.OnClickListener onClickFirstDialogButton() {
+        return v -> {
             SharedPreferencesManager.saveBoolean(isFirstLaunch, "true", true);
             firstDialog.dismiss();
-        });
-        firstDialog.show();
+        };
     }
 
     public static SharedPreferences getEventFlags() {return eventFlags;}

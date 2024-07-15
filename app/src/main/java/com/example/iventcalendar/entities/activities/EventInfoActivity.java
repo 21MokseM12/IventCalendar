@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.iventcalendar.R;
@@ -118,16 +119,25 @@ public class EventInfoActivity extends AppCompatActivity {
         MaterialButton saveButton = exitDialog.findViewById(R.id.saveAndExitButton);
         MaterialButton exitButton = exitDialog.findViewById(R.id.exitButton);
 
-        exitButton.setOnClickListener(v -> {
+        exitButton.setOnClickListener(onClickExitButton());
+        saveButton.setOnClickListener(onClickSaveButton());
+
+        exitDialog.show();
+    }
+
+    private View.OnClickListener onClickExitButton() {
+        return v -> {
             PhotoFileManager.deletePhotoFile(
                     getApplicationContext(),
                     date + "_copy.jpg"
             );
             exitDialog.dismiss();
             finish();
-        });
+        };
+    }
 
-        saveButton.setOnClickListener(v -> {
+    private View.OnClickListener onClickSaveButton() {
+        return view -> {
             exitDialog.dismiss();
             try {
                 if (outputData.get(1).isEmpty() && outputData.get(2).isEmpty() && outputData.get(0).isEmpty()) {
@@ -163,7 +173,6 @@ public class EventInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             finish();
-        });
-        exitDialog.show();
+        };
     }
 }

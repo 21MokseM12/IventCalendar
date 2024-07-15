@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -45,6 +46,8 @@ public class EventSettingsActivity extends AppCompatActivity {
     private String people;
 
     private int crazyCount = 0;
+
+    private ProgressBar crazyBar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -91,28 +94,42 @@ public class EventSettingsActivity extends AppCompatActivity {
         TextView title = exitDialog.findViewById(R.id.exitTitle);
         title.setText(R.string.choose_crazy_level);
 
-        ProgressBar crazyBar = exitDialog.findViewById(R.id.crazyProgressBar);
+        crazyBar = exitDialog.findViewById(R.id.crazyProgressBar);
         FloatingActionButton minusCrazyButton = exitDialog.findViewById(R.id.minusOfCrazyButton);
         FloatingActionButton plusCrazyButton = exitDialog.findViewById(R.id.plusOfCrazyButton);
 
-        minusCrazyButton.setOnClickListener(v -> {
-            if (crazyCount > 0) {
-                crazyCount--;
-                crazyBar.setProgress(crazyCount);
-            }
-        });
+        minusCrazyButton.setOnClickListener(onClickMinusCrazyBar());
 
-        plusCrazyButton.setOnClickListener(v -> {
-            if (crazyCount < 10) {
-                crazyCount++;
-                crazyBar.setProgress(crazyCount);
-            }
-        });
+        plusCrazyButton.setOnClickListener(onClickPlusCrazyBar());
 
         MaterialButton saveButton = exitDialog.findViewById(R.id.saveAndExitButton);
         MaterialButton exitButton = exitDialog.findViewById(R.id.exitButton);
 
-        saveButton.setOnClickListener(v -> {
+        saveButton.setOnClickListener(onClickSaveButton());
+        exitButton.setOnClickListener(onClickExitButton());
+        exitDialog.show();
+    }
+
+    private View.OnClickListener onClickMinusCrazyBar() {
+        return v -> {
+            if (crazyCount > 0) {
+                crazyCount--;
+                crazyBar.setProgress(crazyCount);
+            }
+        };
+    }
+
+    private View.OnClickListener onClickPlusCrazyBar() {
+        return v -> {
+            if (crazyCount < 10) {
+                crazyCount++;
+                crazyBar.setProgress(crazyCount);
+            }
+        };
+    }
+
+    private View.OnClickListener onClickSaveButton() {
+        return v -> {
             exitDialog.dismiss();
             try {
                 EventDAO eventDAO = EventDAOFactory.get(getApplicationContext());
@@ -130,11 +147,13 @@ public class EventSettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             finish();
-        });
-        exitButton.setOnClickListener(v -> {
+        };
+    }
+
+    private View.OnClickListener onClickExitButton() {
+        return v -> {
             exitDialog.dismiss();
             finish();
-        });
-        exitDialog.show();
+        };
     }
 }

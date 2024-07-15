@@ -99,7 +99,7 @@ public class TabFirstPhotos  extends Fragment implements FragmentDataListener {
 
         deletePhotoButton.setOnClickListener(view -> {
             photo.setImageResource(0);
-            photoURI = null;
+            photoURI = Uri.parse("");
         });
         return rootView;
     }
