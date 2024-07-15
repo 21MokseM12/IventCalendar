@@ -36,9 +36,12 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
 
     private ListViewAdapter adapter;
 
+    private EditText placeToAdd;
+
     public static TabSecondLocation newInstance(String arg) {
         TabSecondLocation fragment = new TabSecondLocation();
         Bundle args = new Bundle();
+
         args.putString(ARG_LOCATIONS, arg);
         fragment.setArguments(args);
         return fragment;
@@ -47,6 +50,7 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             if (Objects.equals(getArguments().getString(ARG_LOCATIONS), "")) locations = new ArrayList<>();
             else if (getArguments().getString(ARG_LOCATIONS) != null)
@@ -57,11 +61,12 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab2_location_settings, container, false);
+
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfLocationsSettings);
         titleOfFragment.setText(R.string.title_tab_locations_info);
 
         FloatingActionButton addLocation = rootView.findViewById(R.id.addLocationButton);
-        addLocation.setOnClickListener(v -> showCustomDialog());
+        addLocation.setOnClickListener(onClickAddLocation());
 
         ListView locationsSettings = rootView.findViewById(R.id.locationsViewSettingsList);
         adapter = new ListViewAdapter(this.requireActivity(), locations);
@@ -75,18 +80,26 @@ public class TabSecondLocation  extends Fragment implements FragmentDataListener
         Objects.requireNonNull(locationDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         locationDialog.setCancelable(true);
 
-        EditText placeToAdd = locationDialog.findViewById(R.id.setLocationText);
+        placeToAdd = locationDialog.findViewById(R.id.setLocationText);
         MaterialButton toAddButton = locationDialog.findViewById(R.id.addLocationButton);
 
-        toAddButton.setOnClickListener(v -> {
+        toAddButton.setOnClickListener(onClickConfirmAddingLocation());
+
+        locationDialog.show();
+    }
+
+    private View.OnClickListener onClickAddLocation() {
+        return v -> showCustomDialog();
+    }
+
+    private View.OnClickListener onClickConfirmAddingLocation() {
+        return v -> {
             if (!placeToAdd.getText().toString().trim().isEmpty()) {
                 locations.add(placeToAdd.getText().toString());
                 adapter.notifyDataSetChanged();
             } else Toast.makeText(requireContext(), R.string.push_no_text_message, Toast.LENGTH_LONG).show();
             locationDialog.dismiss();
-        });
-
-        locationDialog.show();
+        };
     }
 
     public String getFragmentData() {

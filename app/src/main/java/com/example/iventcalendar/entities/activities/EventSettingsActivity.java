@@ -26,7 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.iventcalendar.services.implementations.ui.settings.SectionsPagerAdapter;
+import com.example.iventcalendar.services.implementations.adapters.settings.SectionsPagerAdapter;
 import com.example.iventcalendar.databinding.ActivityEventSettingsBinding;
 
 import java.util.List;
@@ -68,7 +68,9 @@ public class EventSettingsActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
         TextView title = binding.title;
-        title.setText(new String(Character.toChars(0x1f9d0)) + " Структура мероприятия " + new String(Character.toChars(0x1f9d0)));
+        title.setText(new String(Character.toChars(0x1f9d0)) +
+                getString(R.string.title_text_settings_activity) +
+                new String(Character.toChars(0x1f9d0)));
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override

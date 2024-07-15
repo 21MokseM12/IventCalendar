@@ -34,15 +34,18 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
 
     private ListViewAdapter adapter;
 
+    private EditText placeToAdd;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab3_people_settings, container, false);
+
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfPeopleSettings);
         titleOfFragment.setText(R.string.title_tab_people_settings);
 
         people = new ArrayList<>();
         addPeople = rootView.findViewById(R.id.addPeopleButton);
-        addPeople.setOnClickListener(v -> showCustomDialog());
+        addPeople.setOnClickListener(onClickAddPeople());
 
         ListView locationsSettings = rootView.findViewById(R.id.peopleViewSettingsList);
         adapter = new ListViewAdapter(this.requireActivity(), people);
@@ -56,18 +59,26 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         Objects.requireNonNull(peopleDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         peopleDialog.setCancelable(true);
 
-        EditText placeToAdd = peopleDialog.findViewById(R.id.setPeopleText);
+        placeToAdd = peopleDialog.findViewById(R.id.setPeopleText);
         MaterialButton toAddButton = peopleDialog.findViewById(R.id.addPeopleButton);
 
-        toAddButton.setOnClickListener(v -> {
+        toAddButton.setOnClickListener(onClickAddConfirmAddingPeople());
+
+        peopleDialog.show();
+    }
+
+    private View.OnClickListener onClickAddPeople() {
+        return v -> showCustomDialog();
+    }
+
+    private View.OnClickListener onClickAddConfirmAddingPeople() {
+        return v -> {
             if (!placeToAdd.getText().toString().trim().isEmpty()) {
                 people.add(placeToAdd.getText().toString().trim());
                 adapter.notifyDataSetChanged();
-            } else Toast.makeText(requireContext(), "Ничего же не написано...", Toast.LENGTH_LONG).show();
+            } else Toast.makeText(requireContext(), R.string.push_no_text_message, Toast.LENGTH_LONG).show();
             peopleDialog.dismiss();
-        });
-
-        peopleDialog.show();
+        };
     }
 
     public String getFragmentData() {

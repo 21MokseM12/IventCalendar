@@ -34,6 +34,10 @@
     <string name="push_no_photo_message">Фото не было выбрано(</string>
 
     <string name="splash_screen_text">Олег</string>
+    <string name="title_text_main_activity"> Календарь ивентов </string>
+    <string name="title_text_settings_activity"> Структура мероприятия </string>
+    <string name="title_text_information_activity"> МЕРОПРИЯТИЕ </string>
+    <string name="total_count_events_text">Мероприятий за год: </string>
 
     <string name="oyoyoy">ОЙОЙОЙ</string>
     <string name="choose_crazy_level">Укажи уровень безумия!</string>

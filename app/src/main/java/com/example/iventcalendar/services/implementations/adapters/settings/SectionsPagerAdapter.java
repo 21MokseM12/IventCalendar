@@ -1,4 +1,4 @@
-package com.example.iventcalendar.ui.settings;
+package com.example.iventcalendar.services.implementations.adapters.settings;
 
 import android.content.Context;
 
@@ -9,20 +9,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.activities.tabs.settings_tabs.TabFirstPhotos;
-import com.example.iventcalendar.activities.tabs.settings_tabs.TabSecondLocation;
-import com.example.iventcalendar.activities.tabs.settings_tabs.TabThirdPeople;
+import com.example.iventcalendar.entities.tabs.settings_tabs.TabFirstPhotos;
+import com.example.iventcalendar.entities.tabs.settings_tabs.TabSecondLocation;
+import com.example.iventcalendar.entities.tabs.settings_tabs.TabThirdPeople;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
-    private String date;
+    private final String date;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm, String date) {
         super(fm);
@@ -32,14 +28,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //Returning the current tabs
         switch(position) {
-            case 0:
-                return TabFirstPhotos.newInstance(date);
-            case 1:
-                return new TabSecondLocation();
-            case 2:
-                return new TabThirdPeople();
+            case 0: return TabFirstPhotos.newInstance(date);
+            case 1: return new TabSecondLocation();
+            case 2: return new TabThirdPeople();
             default: return null;
         }
     }
@@ -52,7 +44,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return 3;
     }
 }

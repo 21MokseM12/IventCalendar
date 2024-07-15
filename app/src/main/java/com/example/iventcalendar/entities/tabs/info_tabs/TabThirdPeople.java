@@ -36,9 +36,12 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
 
     private ListViewAdapter adapter;
 
+    private EditText placeToAdd;
+
     public static TabThirdPeople newInstance(String arg) {
         TabThirdPeople fragment = new TabThirdPeople();
         Bundle args = new Bundle();
+
         args.putString(ARG_PEOPLE, arg);
         fragment.setArguments(args);
         return fragment;
@@ -47,21 +50,23 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             if (Objects.equals(getArguments().getString(ARG_PEOPLE), "")) people = new ArrayList<>();
             else if (getArguments().getString(ARG_PEOPLE) != null)
-                people = Arrays.stream(requireArguments().getString(ARG_PEOPLE).split(";")).collect(Collectors.toList());
+                people = Arrays.stream(Objects.requireNonNull(requireArguments().getString(ARG_PEOPLE)).split(";")).collect(Collectors.toList());
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab3_people_settings, container, false);
+
         TextView titleOfFragment = rootView.findViewById(R.id.titleOfPeopleSettings);
         titleOfFragment.setText(R.string.title_tab_people_info);
 
         FloatingActionButton addPeople = rootView.findViewById(R.id.addPeopleButton);
-        addPeople.setOnClickListener(v -> showCustomDialog());
+        addPeople.setOnClickListener(onClickAddPeople());
 
         ListView locationsSettings = rootView.findViewById(R.id.peopleViewSettingsList);
         if (people == null) people = new ArrayList<>();
@@ -76,18 +81,26 @@ public class TabThirdPeople  extends Fragment implements FragmentDataListener {
         Objects.requireNonNull(peopleDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         peopleDialog.setCancelable(true);
 
-        EditText placeToAdd = peopleDialog.findViewById(R.id.setPeopleText);
+        placeToAdd = peopleDialog.findViewById(R.id.setPeopleText);
         MaterialButton toAddButton = peopleDialog.findViewById(R.id.addPeopleButton);
 
-        toAddButton.setOnClickListener(v -> {
+        toAddButton.setOnClickListener(onClickConfirmAddingPeople());
+
+        peopleDialog.show();
+    }
+
+    private View.OnClickListener onClickAddPeople() {
+        return v -> showCustomDialog();
+    }
+
+    private View.OnClickListener onClickConfirmAddingPeople() {
+        return v -> {
             if (!placeToAdd.getText().toString().trim().isEmpty()) {
                 people.add(placeToAdd.getText().toString().trim());
                 adapter.notifyDataSetChanged();
             } else Toast.makeText(requireContext(), R.string.push_no_text_message, Toast.LENGTH_LONG).show();
             peopleDialog.dismiss();
-        });
-
-        peopleDialog.show();
+        };
     }
 
     public String getFragmentData() {

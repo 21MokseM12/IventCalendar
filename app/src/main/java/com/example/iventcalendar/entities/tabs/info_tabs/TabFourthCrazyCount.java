@@ -25,9 +25,18 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
 
     private ImageView crazyImage;
 
+    private MaterialButton changeCrazy;
+
+    private FloatingActionButton plusButton;
+
+    private FloatingActionButton minusButton;
+
+    private ProgressBar crazyBar;
+
     public static TabFourthCrazyCount newInstance(String arg) {
         TabFourthCrazyCount fragment = new TabFourthCrazyCount();
         Bundle args = new Bundle();
+
         args.putString(ARG_CRAZY, arg);
         fragment.setArguments(args);
         return fragment;
@@ -36,6 +45,7 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             if (getArguments().getString(ARG_CRAZY) != null)
                 crazyCount = Integer.parseInt(getArguments().getString(ARG_CRAZY));
@@ -49,41 +59,19 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
         crazyImage = rootView.findViewById(R.id.crazyImage);
         setViewDesign();
 
-        FloatingActionButton plusButton = rootView.findViewById(R.id.plusOfCrazyButton);
-        FloatingActionButton minusButton = rootView.findViewById(R.id.minusOfCrazyButton);
+        plusButton = rootView.findViewById(R.id.plusOfCrazyButton);
+        minusButton = rootView.findViewById(R.id.minusOfCrazyButton);
 
 
-        ProgressBar crazyBar = rootView.findViewById(R.id.crazyProgressBar);
+        crazyBar = rootView.findViewById(R.id.crazyProgressBar);
         crazyBar.setProgress(crazyCount);
-        MaterialButton changeCrazy = rootView.findViewById(R.id.changeButton);
+        changeCrazy = rootView.findViewById(R.id.changeButton);
 
-        changeCrazy.setOnClickListener(v -> {
-            if (changeCrazy.getText().equals("Изменить")) {
-                plusButton.setVisibility(View.VISIBLE);
-                minusButton.setVisibility(View.VISIBLE);
-                changeCrazy.setText(R.string.confirmChanges);
-            }
-            else if (changeCrazy.getText().equals("Сохранить")) {
-                plusButton.setVisibility(View.INVISIBLE);
-                minusButton.setVisibility(View.INVISIBLE);
-                changeCrazy.setText(R.string.changeCrazy);
-            }
-        });
+        changeCrazy.setOnClickListener(onClickChangeCrazyButtonsVisibility());
 
-        minusButton.setOnClickListener(v -> {
-            if (crazyCount > 0) {
-                crazyCount--;
-                crazyBar.setProgress(crazyCount);
-                setViewDesign();
-            }
-        });
-        plusButton.setOnClickListener(v -> {
-            if (crazyCount < 10) {
-                crazyCount++;
-                crazyBar.setProgress(crazyCount);
-                setViewDesign();
-            }
-        });
+        minusButton.setOnClickListener(onClickDecreaseCrazy());
+        plusButton.setOnClickListener(onClickIncreaseCrazy());
+
         return rootView;
     }
 
@@ -104,6 +92,41 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
         else if (crazyCount < 4 && crazyCount > 0) return "На плитах были?)";
         else if (crazyCount == 0) return "Не прибедняяяяяйся";
         else return "Некое веселье :D";
+    }
+
+    private View.OnClickListener onClickChangeCrazyButtonsVisibility() {
+        return v -> {
+            if (changeCrazy.getText().equals("Изменить")) {
+                plusButton.setVisibility(View.VISIBLE);
+                minusButton.setVisibility(View.VISIBLE);
+                changeCrazy.setText(R.string.confirmChanges);
+            }
+            else if (changeCrazy.getText().equals("Сохранить")) {
+                plusButton.setVisibility(View.INVISIBLE);
+                minusButton.setVisibility(View.INVISIBLE);
+                changeCrazy.setText(R.string.changeCrazy);
+            }
+        };
+    }
+
+    private View.OnClickListener onClickDecreaseCrazy() {
+        return v -> {
+            if (crazyCount > 0) {
+                crazyCount--;
+                crazyBar.setProgress(crazyCount);
+                setViewDesign();
+            }
+        };
+    }
+
+    private View.OnClickListener onClickIncreaseCrazy() {
+        return v -> {
+            if (crazyCount < 10) {
+                crazyCount++;
+                crazyBar.setProgress(crazyCount);
+                setViewDesign();
+            }
+        };
     }
 
     public String getFragmentData() {

@@ -27,7 +27,7 @@ import androidx.lifecycle.LiveData;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.iventcalendar.services.implementations.ui.info.SectionsPagerAdapter;
+import com.example.iventcalendar.services.implementations.adapters.info.SectionsPagerAdapter;
 import com.example.iventcalendar.databinding.ActivityEventInfoBinding;
 
 import java.util.ArrayList;
@@ -85,7 +85,9 @@ public class EventInfoActivity extends AppCompatActivity {
                     tabs.setupWithViewPager(viewPager);
 
                     TextView title = binding.title;
-                    title.setText(new String(Character.toChars(0x1f973)) + " МЕРОПРИЯТИЕ " + new String(Character.toChars(0x1f973)));
+                    title.setText(new String(Character.toChars(0x1f973)) +
+                            getString(R.string.title_text_information_activity) +
+                            new String(Character.toChars(0x1f973)));
 
                     getOnBackPressedDispatcher().addCallback(EventInfoActivity.this, new OnBackPressedCallback(true) {
                         @Override

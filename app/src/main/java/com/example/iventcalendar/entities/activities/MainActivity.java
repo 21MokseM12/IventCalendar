@@ -55,15 +55,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (!SharedPreferencesManager.containsKey(isFirstLaunch, "true")) showFirstDialog();
 
         TextView titleApp = findViewById(R.id.titleOfApp);
-        titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
+        titleApp.setText(new String(Character.toChars(0x0001F609)) +
+                getString(R.string.title_text_main_activity) +
+                new String(Character.toChars(0x0001F609)));
 
         totalEventDaysView = findViewById(R.id.totalEventDays);
         String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        totalEventDaysView.setText("Мероприятий за год: " +
+        totalEventDaysView.setText(getString(R.string.total_count_events_text) +
                 totalEventDays.getInt(currentYear, 0));
 
         calendar = findViewById(R.id.calendarView);
-        calendar.setOnMonthChangedListener((widget, date) -> totalEventDaysView.setText("Мероприятий за год: " +
+        calendar.setOnMonthChangedListener((widget, date) -> totalEventDaysView.setText(getString(R.string.total_count_events_text) +
                 totalEventDays.getInt(String.valueOf(date.getYear()), 0)));
 
         calendar.setShowOtherDates(MaterialCalendarView.SHOW_NONE);
@@ -73,27 +75,32 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         calendar.addDecorator(eventDecorator);
         calendar.addDecorator(currentDateDecorator);
 
-        View.OnClickListener toSettingsActivityListener = v -> {
+        calendar.setOnDateChangedListener((widget, date, selected) -> {
+            currentDateDecorator.setDate(date);
+            calendar.invalidateDecorators();
+
+            key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
+            if (eventFlags.contains(key)) onClickToEventInfoActivity().onClick(widget);
+            else onClickToEventSettingsActivity().onClick(widget);
+        });
+
+
+    }
+
+    private View.OnClickListener onClickToEventSettingsActivity() {
+        return v -> {
             Intent intent = new Intent(MainActivity.this, EventSettingsActivity.class);
             intent.putExtra("date", key);
             startActivity(intent);
         };
+    }
 
-        View.OnClickListener toEventInfoActivityListener = v -> {
+    private View.OnClickListener onClickToEventInfoActivity() {
+        return v -> {
             Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
             intent.putExtra("date", key);
             startActivity(intent);
         };
-
-        calendar.setOnDateChangedListener((widget, date, selected) -> {
-            currentDateDecorator.setDate(date);
-            calendar.invalidateDecorators();
-            key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
-            if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
-            else toSettingsActivityListener.onClick(widget);
-        });
-
-
     }
 
     private void showFirstDialog() {
