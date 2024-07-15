@@ -1,6 +1,4 @@
 <resources>
-    <!--    <string name="app_name">EventCalendar</string>-->
-
     <string name="title_activity_event_settings">EventSettingsActivity</string>
     <string name="tab_text_1">Фото</string>
     <string name="tab_text_2">Место</string>
@@ -11,6 +9,7 @@
     <string name="text_for_people_dialog">Event-manager</string>
     <string name="add_to_list_view">Добавить</string>
     <string name="exit_and_save_confirm">Сохранить</string>
+    <string name="save_changes">Сохранить изменения?</string>
     <string name="exit_without_save">Выйти</string>
     <string name="change_photo">Изменить фото</string>
     <string name="delete_photo">Удалить фото</string>
@@ -22,4 +21,20 @@
     <string name="welcome_message">Приветствую тебя, Ксюша!!!\nЭто некое приложение написано, чтобы тебе было легче смотреть, какие крутые "февральские",
         "майские" и другие ивенты у тебя были, и конечно структурировать их структуру)\nНе буду тянуть, разбирайся и играй!\nИ хороших тебе безумных ивентов,
         дорогой мой event-менеджер!!</string>
+
+    <string name="title_tab_photos_info">Весь день в одной фотографии:</string>
+    <string name="title_tab_locations_info">Круто попутешествовали, правда?</string>
+    <string name="title_tab_people_info">Жаль не с бабушкой по носу…</string>
+
+    <string name="title_tab_photos_settings">Выбери фото, которое лучше всего описывает иВеНт)</string>
+    <string name="title_tab_locations_settings">Куда вас Бог занёс на этот раз?)</string>
+    <string name="title_tab_people_settings">Какие же сегодня были действующие лица?)</string>
+
+    <string name="push_no_text_message">Ничего же не написано…</string>
+    <string name="push_no_photo_message">Фото не было выбрано(</string>
+
+    <string name="splash_screen_text">Олег</string>
+
+    <string name="oyoyoy">ОЙОЙОЙ</string>
+    <string name="choose_crazy_level">Укажи уровень безумия!</string>
 </resources>

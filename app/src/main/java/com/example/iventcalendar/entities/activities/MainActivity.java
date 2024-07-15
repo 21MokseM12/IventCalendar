@@ -1,4 +1,4 @@
-package com.example.iventcalendar.activities;
+package com.example.iventcalendar.entities.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -10,24 +10,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
-import com.example.iventcalendar.service.decorators.ActiveEventDecorator;
-import com.example.iventcalendar.service.decorators.CurrentDateDecorator;
+import com.example.iventcalendar.services.implementations.decorators.ActiveEventDecorator;
+import com.example.iventcalendar.services.implementations.decorators.CurrentDateDecorator;
+import com.example.iventcalendar.managers.SharedPreferencesManager;
 import com.google.android.material.button.MaterialButton;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private static SharedPreferences eventFlags;
 
     private static SharedPreferences totalEventDays;
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         totalEventDays = getSharedPreferences("Total_Event_Days", MODE_PRIVATE);
         totalEventDays.registerOnSharedPreferenceChangeListener(this);
 
-        if (!isFirstLaunch.contains("true")) showFirstDialog();
+        if (!SharedPreferencesManager.containsKey(isFirstLaunch, "true")) showFirstDialog();
 
         TextView titleApp = findViewById(R.id.titleOfApp);
         titleApp.setText(new String(Character.toChars(0x0001F609)) + " Календарь ивентов " + new String(Character.toChars(0x0001F609)));
@@ -65,44 +63,34 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 totalEventDays.getInt(currentYear, 0));
 
         calendar = findViewById(R.id.calendarView);
-        calendar.setOnMonthChangedListener(new OnMonthChangedListener() {
-            @Override
-            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-                totalEventDaysView.setText("Мероприятий за год: " +
-                        totalEventDays.getInt(String.valueOf(date.getYear()), 0));
-            }
-        });
+        calendar.setOnMonthChangedListener((widget, date) -> totalEventDaysView.setText("Мероприятий за год: " +
+                totalEventDays.getInt(String.valueOf(date.getYear()), 0)));
+
         calendar.setShowOtherDates(MaterialCalendarView.SHOW_NONE);
+
         ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
         CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator(this, R.drawable.oleg_image);
         calendar.addDecorator(eventDecorator);
         calendar.addDecorator(currentDateDecorator);
-        View.OnClickListener toSettingsActivityListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EventSettingsActivity.class);
-                intent.putExtra("date", key);
-                startActivity(intent);
-            }
-        };
-        View.OnClickListener toEventInfoActivityListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
-                intent.putExtra("date", key);
-                startActivity(intent);
-            }
+
+        View.OnClickListener toSettingsActivityListener = v -> {
+            Intent intent = new Intent(MainActivity.this, EventSettingsActivity.class);
+            intent.putExtra("date", key);
+            startActivity(intent);
         };
 
-        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                currentDateDecorator.setDate(date);
-                calendar.invalidateDecorators();
-                key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
-                if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
-                else toSettingsActivityListener.onClick(widget);
-            }
+        View.OnClickListener toEventInfoActivityListener = v -> {
+            Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
+            intent.putExtra("date", key);
+            startActivity(intent);
+        };
+
+        calendar.setOnDateChangedListener((widget, date, selected) -> {
+            currentDateDecorator.setDate(date);
+            calendar.invalidateDecorators();
+            key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
+            if (eventFlags.contains(key)) toEventInfoActivityListener.onClick(widget);
+            else toSettingsActivityListener.onClick(widget);
         });
 
     }
@@ -113,38 +101,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Objects.requireNonNull(firstDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         firstDialog.setCancelable(false);
         MaterialButton button = firstDialog.findViewById(R.id.firstLaunchButton);
-        button.setText("ОЙОЙОЙ");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = isFirstLaunch.edit();
-                editor.putBoolean("true", true);
-                editor.apply();
-                firstDialog.dismiss();
-            }
+        button.setText(R.string.oyoyoy);
+        button.setOnClickListener(v -> {
+            SharedPreferencesManager.saveBoolean(isFirstLaunch, "true", true);
+            firstDialog.dismiss();
         });
         firstDialog.show();
     }
 
-    protected static void saveEventDayFlag(String date) {
-        SharedPreferences.Editor editor = eventFlags.edit();
-        editor.putBoolean(date, true);
-        editor.apply();
-    }
+    public static SharedPreferences getEventFlags() {return eventFlags;}
 
-    protected static void deleteEventDayFlag(String key) {
-        SharedPreferences.Editor editor = eventFlags.edit();
-        editor.remove(key);
-        editor.apply();
-    }
-
-    protected static void addTotalEventDaysCount(String year) {
-        totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)+1).apply();
-    }
-
-    protected static void subtractTotalEventDaysCount(String year) {
-        totalEventDays.edit().putInt(year, totalEventDays.getInt(year, 0)-1).apply();
-    }
+    public static SharedPreferences getTotalEventDays() {return totalEventDays;}
 
     @SuppressLint("SetTextI18n")
     @Override

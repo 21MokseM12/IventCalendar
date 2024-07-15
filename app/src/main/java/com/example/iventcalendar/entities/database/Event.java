@@ -1,4 +1,4 @@
-package com.example.iventcalendar.entities;
+package com.example.iventcalendar.entities.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
