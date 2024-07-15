@@ -47,20 +47,4 @@ public class Event {
     public int getCrazyCount() {
         return crazyCount;
     }
-
-    public void setDateId(@NonNull String dateId) {
-        this.dateId = dateId;
-    }
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-    public void setLocation(String location) {
-        this.location = location;
-    }
-    public void setPeople(String people) {
-        this.people = people;
-    }
-    public void setCrazyCount(int crazyCount) {
-        this.crazyCount = crazyCount;
-    }
 }
