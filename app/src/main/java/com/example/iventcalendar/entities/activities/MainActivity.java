@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.iventcalendar.R;
 import com.example.iventcalendar.services.implementations.decorators.ActiveEventDecorator;
-import com.example.iventcalendar.services.implementations.decorators.CurrentDateDecorator;
+import com.example.iventcalendar.services.implementations.decorators.ChosenDateDecorator;
 import com.example.iventcalendar.managers.SharedPreferencesManager;
+import com.example.iventcalendar.services.implementations.decorators.CurrentDateDecorator;
 import com.google.android.material.button.MaterialButton;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.Calendar;
@@ -71,20 +73,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         calendar.setShowOtherDates(MaterialCalendarView.SHOW_NONE);
 
         ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
-        CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator(this, R.drawable.oleg_image);
+        ChosenDateDecorator chosenDateDecorator = new ChosenDateDecorator(this, R.drawable.oleg_image);
+        CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator(this, CalendarDay.today(), R.drawable.circle_current_date);
+
         calendar.addDecorator(eventDecorator);
+        calendar.addDecorator(chosenDateDecorator);
         calendar.addDecorator(currentDateDecorator);
 
         calendar.setOnDateChangedListener((widget, date, selected) -> {
-            currentDateDecorator.setDate(date);
+            chosenDateDecorator.setDate(date);
             calendar.invalidateDecorators();
 
             key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
             if (eventFlags.contains(key)) onClickToEventInfoActivity().onClick(widget);
             else onClickToEventSettingsActivity().onClick(widget);
         });
-
-
     }
 
     private View.OnClickListener onClickToEventSettingsActivity() {

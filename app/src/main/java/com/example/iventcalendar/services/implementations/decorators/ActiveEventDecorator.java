@@ -10,7 +10,9 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 public class ActiveEventDecorator implements DayViewDecorator {
+
     private final SharedPreferences flags;
+
     private final Drawable drawable;
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -18,6 +20,7 @@ public class ActiveEventDecorator implements DayViewDecorator {
         this.flags = flags;
         this.drawable = context.getDrawable(resId);
     }
+
     @Override
     public boolean shouldDecorate(CalendarDay day) {
         String date = String.valueOf(day.getDay()) + (day.getMonth()+1) + day.getYear();
