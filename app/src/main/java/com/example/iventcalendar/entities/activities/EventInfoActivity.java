@@ -142,16 +142,14 @@ public class EventInfoActivity extends AppCompatActivity {
         return view -> {
             exitDialog.dismiss();
             try {
-                if (outputData.get(1).isEmpty() && outputData.get(2).isEmpty() && outputData.get(0).isEmpty()) {
-
+                if (!isNotEmptyData()) {
                     Executors.newSingleThreadExecutor().execute(() -> {
                         eventDAO.deleteEventByDate(date);
                         SharedPreferencesManager.deleteByKey(MainActivity.getEventFlags(), date);
                         SharedPreferencesManager.decrementIntByKey(MainActivity.getTotalEventDays(), date.substring(date.length()-4));
                     });
-
                 }
-                else if (!outputData.get(1).isEmpty() || !outputData.get(2).isEmpty() || !outputData.get(0).isEmpty()){
+                else {
                     if (outputData.get(0).isEmpty()) {
                         PhotoFileManager.deletePhotoFile(getApplicationContext(),
                                 date + ".jpg");
@@ -176,5 +174,10 @@ public class EventInfoActivity extends AppCompatActivity {
             }
             finish();
         };
+    }
+
+    private boolean isNotEmptyData() {
+        for (int i = 0; i < outputData.size()-1; i++) if (!outputData.get(i).isEmpty()) return true;
+        return false;
     }
 }

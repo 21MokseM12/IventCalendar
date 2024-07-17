@@ -53,7 +53,6 @@ public class EventSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         com.example.iventcalendar.databinding.ActivityEventSettingsBinding binding = ActivityEventSettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -101,7 +100,6 @@ public class EventSettingsActivity extends AppCompatActivity {
         FloatingActionButton plusCrazyButton = exitDialog.findViewById(R.id.plusOfCrazyButton);
 
         minusCrazyButton.setOnClickListener(onClickMinusCrazyBar());
-
         plusCrazyButton.setOnClickListener(onClickPlusCrazyBar());
 
         MaterialButton saveButton = exitDialog.findViewById(R.id.saveAndExitButton);

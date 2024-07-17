@@ -108,9 +108,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         firstDialog.setContentView(R.layout.custom_first_launch_dialog);
         Objects.requireNonNull(firstDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         firstDialog.setCancelable(false);
+
         MaterialButton button = firstDialog.findViewById(R.id.firstLaunchButton);
         button.setText(R.string.oyoyoy);
         button.setOnClickListener(onClickFirstDialogButton());
+
         firstDialog.show();
     }
 
