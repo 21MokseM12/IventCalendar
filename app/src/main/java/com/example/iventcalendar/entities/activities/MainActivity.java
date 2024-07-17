@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         calendar.setShowOtherDates(MaterialCalendarView.SHOW_NONE);
 
-        ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.skate_circle);
-        ChosenDateDecorator chosenDateDecorator = new ChosenDateDecorator(this, R.drawable.oleg_image);
+        ActiveEventDecorator eventDecorator = new ActiveEventDecorator(this, eventFlags, R.drawable.event_day_date);
+        ChosenDateDecorator chosenDateDecorator = new ChosenDateDecorator(this, R.drawable.chosen_date);
         CurrentDateDecorator currentDateDecorator = new CurrentDateDecorator(this, CalendarDay.today(), R.drawable.circle_current_date);
 
         calendar.addDecorator(eventDecorator);

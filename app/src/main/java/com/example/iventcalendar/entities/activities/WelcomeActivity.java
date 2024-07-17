@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.olegImage);
         text.setText(R.string.splash_screen_text);
 
-        image.setImageResource(R.drawable.oleg_image);
+        image.setImageResource(R.drawable.chosen_date);
 
         int delay = 1000;
         Timer timer = new Timer();
