@@ -26,6 +26,7 @@
             android:gravity="center"
             android:padding="@dimen/appbar_padding"
             android:textSize="@dimen/font_size"/>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:theme="@style/tab_text"

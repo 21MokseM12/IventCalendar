@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private static SharedPreferences eventFlags;
 
+    private SharedPreferences descriptions;
+
     private static SharedPreferences totalEventDays;
 
     private SharedPreferences isFirstLaunch;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setContentView(R.layout.activity_main);
 
         isFirstLaunch = getSharedPreferences("First_Launch_App", MODE_PRIVATE);
+        descriptions = getSharedPreferences("Descriptions", MODE_PRIVATE);
         eventFlags = getSharedPreferences("Existing_Events", MODE_PRIVATE);
         totalEventDays = getSharedPreferences("Total_Event_Days", MODE_PRIVATE);
         totalEventDays.registerOnSharedPreferenceChangeListener(this);
@@ -85,9 +89,31 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             calendar.invalidateDecorators();
 
             key = String.valueOf(date.getDay()) + (date.getMonth()+1) + date.getYear();
+
+            EditText description = findViewById(R.id.description);
+            MaterialButton saveDescription = findViewById(R.id.saveDescription);
+            saveDescription.setOnClickListener(onClickSaveDescription(description, widget));
+
+            description.setVisibility(View.VISIBLE);
+            saveDescription.setVisibility(View.VISIBLE);
+
+            if (eventFlags.contains(key)) {
+                saveDescription.setText(R.string.changeEvent);
+                description.setText(descriptions.getString(key, ""));
+            } else {
+                saveDescription.setText(R.string.saveEvent);
+                description.setText("");
+            }
+        });
+    }
+
+    private View.OnClickListener onClickSaveDescription(EditText description, MaterialCalendarView widget) {
+        return v -> {
+            String descriptionText = description.getText().toString().trim();
+            SharedPreferencesManager.saveString(descriptions, key, descriptionText);
             if (eventFlags.contains(key)) onClickToEventInfoActivity().onClick(widget);
             else onClickToEventSettingsActivity().onClick(widget);
-        });
+        };
     }
 
     private View.OnClickListener onClickToEventSettingsActivity() {

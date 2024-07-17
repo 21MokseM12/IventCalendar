@@ -104,7 +104,7 @@ public class TabFourthCrazyCount  extends Fragment implements FragmentDataListen
             else if (changeCrazy.getText().equals("Сохранить")) {
                 plusButton.setVisibility(View.INVISIBLE);
                 minusButton.setVisibility(View.INVISIBLE);
-                changeCrazy.setText(R.string.changeCrazy);
+                changeCrazy.setText(R.string.change);
             }
         };
     }

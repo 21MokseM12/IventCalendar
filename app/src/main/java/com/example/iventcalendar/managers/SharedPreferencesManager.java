@@ -12,6 +12,12 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
+    public static void saveString(SharedPreferences pref, String key, String value) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
     public static void incrementIntByKey(SharedPreferences pref, String key) {
         pref.edit().putInt(key, pref.getInt(key, 0)+1).apply();
     }

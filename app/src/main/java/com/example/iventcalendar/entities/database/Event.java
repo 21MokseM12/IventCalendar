@@ -9,9 +9,13 @@ public class Event {
     @PrimaryKey
     @NonNull
     private String dateId;
+
     private String photoPath;
+
     private String location;
+
     private String people;
+
     private int crazyCount;
 
     public Event(@NonNull String dateId, String photoPath, String location, String people, int crazyCount) {
@@ -21,6 +25,7 @@ public class Event {
         this.people = people;
         this.crazyCount = crazyCount;
     }
+
     public Event(@NonNull String dateId, String photoPath, String location, String[] people, int crazyCount) {
         this.dateId = dateId;
         this.photoPath = photoPath;
@@ -35,15 +40,19 @@ public class Event {
     public String getDateId() {
         return dateId;
     }
+
     public String getPhotoPath() {
         return photoPath;
     }
+
     public String getLocation() {
         return location;
     }
+
     public String getPeople() {
         return people;
     }
+
     public int getCrazyCount() {
         return crazyCount;
     }

@@ -4,6 +4,7 @@
     <string name="tab_text_2">Место</string>
     <string name="tab_text_3">Люди</string>
     <string name="tab_text_4">Безумие</string>
+
     <string name="title_activity_event_info">EventInfoActivity</string>
     <string name="text_for_location_dialog">Место</string>
     <string name="text_for_people_dialog">Event-manager</string>
@@ -14,13 +15,14 @@
     <string name="change_photo">Изменить фото</string>
     <string name="delete_photo">Удалить фото</string>
     <string name="loading_wait_text">Пожалуйста, подождите</string>
-    <string name="changeCrazy">Изменить</string>
+    <string name="change">Изменить</string>
     <string name="confirmChanges">Сохранить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="welcome_message">Приветствую тебя, Ксюша!!!\nЭто некое приложение написано, чтобы тебе было легче смотреть, какие крутые "февральские",
         "майские" и другие ивенты у тебя были, и конечно структурировать их структуру)\nНе буду тянуть, разбирайся и играй!\nИ хороших тебе безумных ивентов,
         дорогой мой event-менеджер!!</string>
+    <string name="change_description_message">Введи небольшое описание мероприятия</string>
 
     <string name="title_tab_photos_info">Весь день в одной фотографии:</string>
     <string name="title_tab_locations_info">Круто попутешествовали, правда?</string>
@@ -41,4 +43,7 @@
 
     <string name="oyoyoy">ОЙОЙОЙ</string>
     <string name="choose_crazy_level">Укажи уровень безумия!</string>
+
+    <string name="changeEvent">Открыть мероприятие</string>
+    <string name="saveEvent">Внести мероприятие</string>
 </resources>
