@@ -17,7 +17,7 @@ The Android application is written in **Java** and uses an **SQLite** database t
 There are two ways to start using the app:
 
 1. **Clone and Build**: Clone this repository, build the project, and start using the app.
-2. **Telegram Bot** (recommended): Follow the link to the Telegram bot created specifically for this app. The bot notifies users of all updates and provides the APK file using the "Giggle" code:  
+2. **Telegram Bot** (recommended): Follow the link to the Telegram bot created specifically for this app. The bot notifies users of all updates and provides the APK file using the "Хихитрая" code:  
    [Telegram Bot](https://t.me/oy0yoybot)
 
 ## Explanation
